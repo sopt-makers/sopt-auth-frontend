@@ -1,7 +1,10 @@
-import React from 'react'
+'use client';
 
-export const page = () => {
+const page = () => {
   return (
-    <div>page</div>
+    <button>구글로 로그인하기</button>
   )
 }
+
+export default page;
+
