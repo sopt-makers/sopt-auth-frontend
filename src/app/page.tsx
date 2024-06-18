@@ -1,7 +1,7 @@
 'use client';
 
-import useAppleAuth from './hooks/useAppleAuth';
-import useGoogleAuth from './hooks/useGoogleAuth';
+import useAppleAuth from '@/hooks/useAppleAuth';
+import useGoogleAuth from '@/hooks/useGoogleAuth';
 
 const page = () => {
   const googleLoginAuth = useGoogleAuth();

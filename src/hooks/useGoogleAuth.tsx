@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const GOOGLE_LOGIN_CALLBACK_URI = `${process.env.NEXT_PUBLIC_ORIGIN}/auth/callback/google/login`;
 const GOOGLE_REGISTER_CALLBACK_URI = `${process.env.NEXT_PUBLIC_ORIGIN}/auth/callback/google/register`;
 
