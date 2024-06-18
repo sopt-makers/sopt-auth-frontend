@@ -2265,6 +2265,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"emotion-reset@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "emotion-reset@npm:3.0.1"
+  peerDependencies:
+    "@emotion/react": ">=11"
+  checksum: 10c0/54464cdcd020fd8ca2f0f6249b2927bd61f12c162513f54a4735b6bdae1242a1ad376997abd194da425c2dd0e3bcb49e8ff3f9a8eb7477fa25096d81f3dc5e0e
+  languageName: node
+  linkType: hard
+
 "encoding@npm:^0.1.13":
   version: 0.1.13
   resolution: "encoding@npm:0.1.13"
@@ -5106,6 +5115,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.13.0"
     "@typescript-eslint/parser": "npm:^7.13.0"
     axios: "npm:^1.7.2"
+    emotion-reset: "npm:^3.0.1"
     eslint: "npm:^9.5.0"
     eslint-config-airbnb: "npm:^19.0.4"
     eslint-config-airbnb-typescript: "npm:^18.0.0"
