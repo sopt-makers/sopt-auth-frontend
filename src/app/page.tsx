@@ -1,18 +1,48 @@
 'use client';
 
+import '@sopt-makers/ui/dist/index.css';
 import useAppleAuth from '@/hooks/useAppleAuth';
 import useGoogleAuth from '@/hooks/useGoogleAuth';
+import { Button } from '@sopt-makers/ui';
+import { Global } from '@emotion/react';
+import GlobalStyle from '@/styles/GlobalStyle';
+import styled from '@emotion/styled';
+import { fontsObject } from '@sopt-makers/fonts';
 
 const page = () => {
   const googleLoginAuth = useGoogleAuth();
   const appleLoginAuth = useAppleAuth();
 
   return (
-    <>
-      <button onClick={googleLoginAuth.login}>구글로 로그인하기</button>
-      <button onClick={appleLoginAuth.login}>애플로 로그인하기</button>
-    </>
+    <Wrapper>
+      <Global styles={GlobalStyle} />
+      <h2>
+        SOPT 회원으로 인증된 <br />
+        사용자만 로그인할 수 있어요
+      </h2>
+      <ButtonWrapper>
+        <Button size='lg' theme='white' rounded='md' onClick={googleLoginAuth.login}>
+          Google로 로그인
+        </Button>
+        <Button size='lg' theme='white' rounded='md' onClick={appleLoginAuth.login}>
+          Apple로 로그인
+        </Button>
+      </ButtonWrapper>
+    </Wrapper>
   );
 };
 
 export default page;
+
+const Wrapper = styled.main`
+  & > h2 {
+    ${fontsObject.HEADING_2_32_B}
+    text-align: center;
+  }
+`;
+
+const ButtonWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;

@@ -13,11 +13,15 @@ const GlobalStyle: Interpolation<Theme> = (theme: Theme) => css`
     font-size: 10px;
     width: 100%;
     min-height: 100%;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: ${colors.background};
     font-family: 'SUIT', sans-serif;
     font-weight: 400;
     font-style: normal;
+    color: ${colors.white};
 
     overflow-y: scroll;
     overflow-x: hidden;
