@@ -8,7 +8,7 @@ import { Global } from '@emotion/react';
 import GlobalStyle from '@/styles/GlobalStyle';
 import styled from '@emotion/styled';
 import { fontsObject } from '@sopt-makers/fonts';
-import { IconGoogle } from '@/public/icons';
+import { IconApple, IconGoogle } from '@/public/icons';
 
 const page = () => {
   const googleLoginAuth = useGoogleAuth();
@@ -23,10 +23,11 @@ const page = () => {
       </h2>
       <ButtonWrapper>
         <Button size='lg' theme='white' rounded='md' onClick={googleLoginAuth.login}>
-          <StIconGoogle />
+          {/* <StIconGoogle /> */}
           Google로 로그인
         </Button>
         <Button size='lg' theme='white' rounded='md' onClick={appleLoginAuth.login}>
+          {/* <StIconApple /> */}
           Apple로 로그인
         </Button>
       </ButtonWrapper>
@@ -55,5 +56,10 @@ const ButtonWrapper = styled.section`
 `;
 
 const StIconGoogle = styled(IconGoogle)`
-  height: 20px;
+  height: 22px;
+`;
+
+const StIconApple = styled(IconApple)`
+  height: 40px;
+  width: 40px;
 `;
