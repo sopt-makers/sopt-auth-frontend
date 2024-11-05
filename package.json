@@ -10,6 +10,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sopt-makers/colors": "^3.0.2",
+    "@sopt-makers/fonts": "^2.0.1",
+    "@sopt-makers/icons": "^1.0.6",
+    "@sopt-makers/ui": "^2.7.6",
     "next": "15.0.2",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028"
