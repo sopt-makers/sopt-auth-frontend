@@ -49,31 +49,31 @@ function LoginSection() {
 export default LoginSection;
 
 const loginSectionStyles = css.raw({
-  marginTop: "35px",
+  marginTop: "3.5rem",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
 
   "@media (max-width: 480px)": {
-    marginTop: "32px",
+    marginTop: "3.2rem",
   },
 });
 
 const loginButtonSectionStyles = css.raw({
   display: "flex",
   flexDirection: "column",
-  gap: "12px",
-  marginTop: "8px",
+  gap: "1.2rem",
+  marginTop: "0.8rem",
 });
 
 const lastLoggedInBannerStyles = css.raw({
-  height: "51px",
+  height: "5.1rem",
 });
 
 const cannotLoginButtonStyles = css.raw({
   display: "flex",
   alignItems: "center",
-  marginTop: "19px",
+  marginTop: "1.9rem",
   color: "gray.30",
 
   "&:hover": {
@@ -91,19 +91,19 @@ const cannotLoginButtonTextStyles = css.raw({
 });
 
 const iconChevronRightStyles = css.raw({
-  width: "16px",
-  height: "16px",
+  width: "1.6rem",
+  height: "1.6rem",
 });
 
 const orWrapperStyles = css.raw({
   display: "flex",
-  gap: "8px",
+  gap: "0.8rem",
   alignItems: "center",
-  marginTop: "24px",
+  marginTop: "2.4rem",
 });
 const orLineStyles = css.raw({
-  width: "140.5px",
-  height: "1px",
+  width: "14.05rem",
+  height: "0.1rem",
   backgroundColor: "gray.300",
 });
 
@@ -113,10 +113,10 @@ const orTextStyles = css.raw({
 });
 
 const signUpButtonStyles = css.raw({
-  width: "380px",
-  height: "56px",
-  marginTop: "16px",
-  borderRadius: "12px",
+  width: "38rem",
+  height: "5.6rem",
+  marginTop: "1.6rem",
+  borderRadius: "1.2rem",
   textStyle: "label-1-18-sb",
   color: "white",
   backgroundColor: "gray.700",
@@ -131,8 +131,8 @@ const signUpButtonStyles = css.raw({
   },
 
   "@media (max-width: 480px)": {
-    width: "335px",
-    height: "48px",
+    width: "33.5rem",
+    height: "4.8rem",
     textStyle: "label-2-16-sb",
   },
 });

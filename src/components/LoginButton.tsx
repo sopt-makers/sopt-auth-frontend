@@ -35,11 +35,11 @@ const buttonStyles = css.raw({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: "4px",
-  width: "380px",
-  height: "56px",
+  gap: "0.4rem",
+  width: "38rem",
+  height: "5.6rem",
   backgroundColor: "white",
-  borderRadius: "10px",
+  borderRadius: "1rem",
 
   "&:hover": {
     cursor: "pointer",
@@ -51,8 +51,8 @@ const buttonStyles = css.raw({
   },
 
   "@media (max-width: 480px)": {
-    width: "335px",
-    height: "48px",
+    width: "33.5rem",
+    height: "4.8rem",
   },
 });
 

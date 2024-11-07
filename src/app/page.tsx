@@ -63,12 +63,12 @@ export default function Home() {
 
 const mainWrapperStyles = css.raw({
   display: "flex",
-  height: "calc(100vh - 210px)",
+  height: "calc(100vh - 21rem)",
   flexDirection: "column",
   justifyContent: "center",
 
   "@media (max-width: 480px)": {
-    height: "calc(100dvh - 100px)",
+    height: "calc(100dvh - 10rem)",
   },
 });
 
@@ -91,10 +91,10 @@ const footerStyles = css.raw({
   flexDirection: "column",
   alignItems: "center",
   marginTop: "auto",
-  marginBottom: "70px",
+  marginBottom: "7rem",
 
   "@media (max-width: 480px)": {
-    marginBottom: "34px",
+    marginBottom: "3.4rem",
   },
 });
 
@@ -110,29 +110,29 @@ const footerTextStyles = css.raw({
 const linkWrapperStyles = css.raw({
   display: "flex",
   alignItems: "center",
-  gap: "40px",
+  gap: "4rem",
 
   "@media (max-width: 480px)": {
-    gap: "16px",
+    gap: "1.6rem",
   },
 });
 
 const soptImgStyles = css.raw({
-  width: "184px",
-  height: "114px",
+  width: "18.4rem",
+  height: "11.4rem",
 
   "@media (max-width: 480px)": {
-    width: "73.6px",
-    height: "45.6px",
+    width: "7.36rem",
+    height: "4.56rem",
   },
 });
 
 const makersImgStyles = css.raw({
-  width: "187.85px",
-  height: "51px",
+  width: "18.785rem",
+  height: "5.1rem",
 
   "@media (max-width: 480px)": {
-    width: "75.14px",
-    height: "20.4px",
+    width: "7.514rem",
+    height: "2.04rem",
   },
 });

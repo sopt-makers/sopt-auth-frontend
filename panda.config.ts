@@ -38,7 +38,11 @@ export default defineConfig({
   exclude: [],
   outdir: "styled-system",
 
-  globalCss: {},
+  globalCss: {
+    html: {
+      fontSize: "62.5%",
+    },
+  },
 
   theme: {
     extend: {
