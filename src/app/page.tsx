@@ -111,6 +111,10 @@ const linkWrapperStyles = css.raw({
   display: "flex",
   alignItems: "center",
   gap: "40px",
+
+  "@media (max-width: 480px)": {
+    gap: "16px",
+  },
 });
 
 const soptImgStyles = css.raw({
