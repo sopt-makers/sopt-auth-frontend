@@ -1,25 +1,15 @@
 "use client";
 
 import { css } from "@/styled-system/css";
-import { useState } from "react";
+
 import LoginButton from "./LoginButton";
 import { IconChevronRight } from "@sopt-makers/icons";
+import LastLoggedInBanner from "./LastLoggedInBanner";
 
 function LoginSection() {
-  const [lastLoggedInAccount, setLastLoggedInAccount] = useState<
-    "apple" | "google" | null
-  >("google"); // 마지막으로 로그인한 계정
-
   return (
     <div className={css({ ...loginSectionStyles })}>
-      <div className={css({ ...lastLoggedInBannerStyles })}>
-        {lastLoggedInAccount && (
-          <img
-            src={`/${lastLoggedInAccount}_tooltip.svg`}
-            alt={`${lastLoggedInAccount} 툴팁 로고`}
-          />
-        )}
-      </div>
+      <LastLoggedInBanner />
       <section className={css({ ...loginButtonSectionStyles })}>
         <LoginButton
           buttonText="Google로 로그인"
@@ -64,10 +54,6 @@ const loginButtonSectionStyles = css.raw({
   flexDirection: "column",
   gap: "1.2rem",
   marginTop: "0.8rem",
-});
-
-const lastLoggedInBannerStyles = css.raw({
-  height: "5.1rem",
 });
 
 const cannotLoginButtonStyles = css.raw({
