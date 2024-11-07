@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { css } from "@/styled-system/css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,8 +13,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="ko">
+      <body
+        className={css({
+          ...rootLayoutStyle,
+        })}
+      >
+        {children}
+      </body>
     </html>
   );
 }
+
+const rootLayoutStyle = css.raw({
+  backgroundColor: "background",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100vh",
+});
