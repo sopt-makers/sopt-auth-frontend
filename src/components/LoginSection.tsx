@@ -5,34 +5,51 @@ import { css } from "@/styled-system/css";
 import LoginButton from "./LoginButton";
 import { IconChevronRight } from "@sopt-makers/icons";
 import LastLoggedInBanner from "./LastLoggedInBanner";
+import CannotLoginModal from "./CannotLoginModal";
+import { useState } from "react";
+import CannotLoginModalPortal from "./CannotLoginModalPortal";
 
 function LoginSection() {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleClickCannotLoginButton = () => {
+    setIsModalOpen(true);
+  };
+
   return (
-    <div className={css({ ...loginSectionStyles })}>
-      <LastLoggedInBanner />
-      <section className={css({ ...loginButtonSectionStyles })}>
-        <LoginButton
-          buttonText="Google로 로그인"
-          buttonIcon={<img src="/google.svg" alt="구글 로고" />}
-        />
-        <LoginButton
-          buttonText="Apple로 로그인"
-          buttonIcon={<img src="/apple.svg" alt="애플 로고" />}
-        />
-      </section>
-      <button className={css({ ...cannotLoginButtonStyles })}>
-        <span className={css({ ...cannotLoginButtonTextStyles })}>
-          로그인이 안 되나요?
-        </span>
-        <IconChevronRight className={css({ ...iconChevronRightStyles })} />
-      </button>
-      <div className={css({ ...orWrapperStyles })}>
-        <div className={css({ ...orLineStyles })} />
-        <span className={css({ ...orTextStyles })}>또는</span>
-        <div className={css({ ...orLineStyles })} />
+    <>
+      {isModalOpen && <CannotLoginModal />}
+      <div className={css({ ...loginSectionStyles })}>
+        <LastLoggedInBanner />
+        <section className={css({ ...loginButtonSectionStyles })}>
+          <LoginButton
+            buttonText="Google로 로그인"
+            buttonIcon={<img src="/google.svg" alt="구글 로고" />}
+          />
+          <LoginButton
+            buttonText="Apple로 로그인"
+            buttonIcon={<img src="/apple.svg" alt="애플 로고" />}
+          />
+        </section>
+        <button
+          className={css({ ...cannotLoginButtonStyles })}
+          onClick={handleClickCannotLoginButton}
+        >
+          <span className={css({ ...cannotLoginButtonTextStyles })}>
+            로그인이 안 되나요?
+          </span>
+          <IconChevronRight className={css({ ...iconChevronRightStyles })} />
+        </button>
+        <div className={css({ ...orWrapperStyles })}>
+          <div className={css({ ...orLineStyles })} />
+          <span className={css({ ...orTextStyles })}>또는</span>
+          <div className={css({ ...orLineStyles })} />
+        </div>
+        <button className={css({ ...signUpButtonStyles })}>
+          SOPT 회원가입
+        </button>
       </div>
-      <button className={css({ ...signUpButtonStyles })}>SOPT 회원가입</button>
-    </div>
+    </>
   );
 }
 
