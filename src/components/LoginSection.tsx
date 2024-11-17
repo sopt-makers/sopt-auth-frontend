@@ -7,7 +7,6 @@ import { IconChevronRight } from "@sopt-makers/icons";
 import LastLoggedInBanner from "./LastLoggedInBanner";
 import CannotLoginModal from "./CannotLoginModal";
 import { useState } from "react";
-import CannotLoginModalPortal from "./CannotLoginModalPortal";
 
 function LoginSection() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -16,9 +15,13 @@ function LoginSection() {
     setIsModalOpen(true);
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      {isModalOpen && <CannotLoginModal />}
+      {isModalOpen && <CannotLoginModal handleCloseModal={handleCloseModal} />}
       <div className={css({ ...loginSectionStyles })}>
         <LastLoggedInBanner />
         <section className={css({ ...loginButtonSectionStyles })}>
