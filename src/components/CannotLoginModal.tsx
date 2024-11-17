@@ -9,19 +9,20 @@ interface CannotLoginModalProps {
 }
 
 function CannotLoginModal({ handleCloseModal }: CannotLoginModalProps) {
-  const handleClickLoginAccountButton = (e: MouseEvent<HTMLButtonElement>) => {
-    // 버튼 눌러도 모달 안 닫히도록 설정
-    e.stopPropagation(); // 만약 버튼 누르고 모달 닫히도록 의도하고 싶으면 해당 라인 제거
-  };
+  const handleClickLoginAccountButton = (
+    e: MouseEvent<HTMLButtonElement>
+  ) => {};
 
-  const handleClickResetAccountButton = (e: MouseEvent<HTMLButtonElement>) => {
-    // 버튼 눌러도 모달 안 닫히도록 설정
-    e.stopPropagation(); // 만약 버튼 누르고 모달 닫히도록 의도하고 싶으면 해당 라인 제거
-  };
+  const handleClickResetAccountButton = (
+    e: MouseEvent<HTMLButtonElement>
+  ) => {};
 
-  const handleClickKakaoChannelButton = (e: MouseEvent<HTMLButtonElement>) => {
-    // 버튼 눌러도 모달 안 닫히도록 설정
-    e.stopPropagation(); // 만약 버튼 누르고 모달 닫히도록 의도하고 싶으면 해당 라인 제거
+  const handleClickKakaoChannelButton = (
+    e: MouseEvent<HTMLButtonElement>
+  ) => {};
+
+  const preventPropagation = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
   };
 
   return (
@@ -30,7 +31,10 @@ function CannotLoginModal({ handleCloseModal }: CannotLoginModalProps) {
         className={css({ ...cannotLoginModalWrapperStyles })}
         onClick={handleCloseModal}
       >
-        <div className={css({ ...cannotLoginModalStyles })}>
+        <div
+          className={css({ ...cannotLoginModalStyles })}
+          onClick={preventPropagation}
+        >
           <h1 className={css({ ...modalTitleStyles })}>
             <IconAlertCircle className={css({ ...iconAlertCircleStyles })} />
             <span>로그인이 안 되나요?</span>
@@ -58,7 +62,7 @@ const cannotLoginModalWrapperStyles = css.raw({
   position: "absolute",
   top: "0",
   left: "0",
-  zIndex: "999",
+  zIndex: "1",
 
   display: "flex",
   justifyContent: "center",
