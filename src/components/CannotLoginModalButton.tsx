@@ -42,4 +42,8 @@ const cannotLoginModalButtonStyles = css.raw({
   "&:hover": {
     backgroundColor: "gray.700",
   },
+
+  "&:action": {
+    backgroundColor: "gray.600",
+  },
 });
