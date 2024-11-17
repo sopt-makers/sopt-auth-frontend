@@ -67,6 +67,10 @@ const cannotLoginModalWrapperStyles = css.raw({
   height: "100vh",
 
   backgroundColor: "grayAlpha.800",
+
+  "@media (max-width: 480px)": {
+    alignItems: "flex-end",
+  },
 });
 
 const cannotLoginModalStyles = css.raw({
@@ -75,9 +79,15 @@ const cannotLoginModalStyles = css.raw({
   padding: "0 0.8rem",
   marginTop: "2.8rem",
 
-  borderRadius: "1.2rem",
+  borderRadius: "1.6rem",
 
   backgroundColor: "gray.800",
+
+  "@media (max-width: 480px)": {
+    width: "calc(100% - 3.2rem)",
+    height: "20.6rem",
+    marginBottom: "0.8rem",
+  },
 });
 
 const modalTitleStyles = css.raw({
@@ -95,6 +105,7 @@ const modalTitleStyles = css.raw({
 const iconAlertCircleStyles = css.raw({
   width: "2.4rem",
   height: "2.4rem",
+
   color: "white",
 });
 
@@ -104,4 +115,8 @@ const buttonListStyles = css.raw({
   gap: "1.2rem",
 
   marginTop: "1.2rem",
+
+  "@media (max-width: 480px)": {
+    gap: "0.4rem",
+  },
 });
