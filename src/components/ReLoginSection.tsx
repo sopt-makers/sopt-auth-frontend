@@ -39,10 +39,16 @@ function ReLoginSection() {
 export default ReLoginSection;
 
 const reLoginSectionStyles = css.raw({
-  marginTop: "6.6rem",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+
+  marginTop: "6.6rem",
+
+  "@media (max-width: 480px)": {
+    marginTop: "0",
+    marginBottom: "2.4rem",
+  },
 });
 
 const reLoginButtonStyles = css.raw({
@@ -67,7 +73,9 @@ const reLoginButtonStyles = css.raw({
 const cannotLoginButtonStyles = css.raw({
   display: "flex",
   alignItems: "center",
+
   marginTop: "1.6rem",
+
   color: "gray.30",
 
   "&:hover": {

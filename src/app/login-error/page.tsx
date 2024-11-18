@@ -7,20 +7,22 @@ function page() {
   return (
     <div className={css({ ...pageWrapperStyles })}>
       <main className={css({ ...mainWrapperStyles })}>
-        <img
-          src="/login_error.svg"
-          alt="로그인 에러 이미지"
-          className={css({ ...errorImageStyles })}
-        />
-        <div className={css({ ...mainTextStyles })}>
-          <h1 className={css({ ...mainTitleStyles })}>
-            앗! <span className={css({ ...emphasizeStyles })}>회원 정보</span>를
-            찾을 수 없어요.
-            <br />
-          </h1>
-          <h2 className={css({ ...subTitleStyles })}>
-            먼저 회원가입 후, 다시 로그인해주세요.
-          </h2>
+        <div className={css({ ...mainImgTextWrapperStyles })}>
+          <img
+            src="/login_error.svg"
+            alt="로그인 에러 이미지"
+            className={css({ ...errorImgStyles })}
+          />
+          <div className={css({ ...mainTextStyles })}>
+            <h1 className={css({ ...mainTitleStyles })}>
+              앗! <span className={css({ ...emphasizeStyles })}>회원 정보</span>
+              를 찾을 수 없어요.
+              <br />
+            </h1>
+            <h2 className={css({ ...subTitleStyles })}>
+              먼저 회원가입 후, 다시 로그인해주세요.
+            </h2>
+          </div>
         </div>
         <ReLoginSection />
       </main>
@@ -53,35 +55,57 @@ function page() {
 export default page;
 
 const pageWrapperStyles = css.raw({
-  width: "100%",
-  height: "100vh",
-
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
+
+  width: "100%",
+  height: "100vh",
+
+  "@media (max-width: 480px)": {
+    height: "100dvh",
+  },
 });
 
 const mainWrapperStyles = css.raw({
   display: "flex",
-  height: "calc(100vh - 19.7rem)",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
 
+  height: "calc(100vh - 19.7rem)",
+
   "@media (max-width: 480px)": {
+    display: "block",
+    height: "100dvh",
+  },
+});
+
+const mainImgTextWrapperStyles = css.raw({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+
+  "@media (max-width: 480px)": {
+    justifyContent: "center",
     height: "calc(100dvh - 11.4rem)",
   },
 });
 
-const errorImageStyles = css.raw({
+const errorImgStyles = css.raw({
   width: "19.4rem",
   height: "19.4rem",
 });
 
 const mainTextStyles = css.raw({
   marginTop: "2.8rem",
+
   textAlign: "center",
   color: "white",
+
+  "@media (max-width: 480px)": {
+    marginTop: "0.8rem",
+  },
 });
 
 const mainTitleStyles = css.raw({
@@ -89,6 +113,13 @@ const mainTitleStyles = css.raw({
   fontSize: "4rem",
   lineHeight: "6rem",
   letterSpacing: "-2%",
+
+  "@media (max-width: 480px)": {
+    fontWeight: 600,
+    fontSize: "2.4rem",
+    lineHeight: "3.6rem",
+    letterSpacing: "-2%",
+  },
 });
 
 const emphasizeStyles = css.raw({
@@ -99,13 +130,22 @@ const subTitleStyles = css.raw({
   marginTop: "0.6rem",
 
   textStyle: " title-3-24-sb",
+
+  "@media (max-width: 480px)": {
+    textStyle: "label-1-18-sb",
+  },
 });
 
 const footerStyles = css.raw({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+
   marginBottom: "10rem",
+
+  "@media (max-width: 480px)": {
+    display: "none",
+  },
 });
 
 const footerTextStyles = css.raw({
