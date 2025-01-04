@@ -19,13 +19,13 @@ function AuthSection({ children }: AuthSectionProps) {
           />
           <Button>인증번호 받기</Button>
         </div>
-        <div>
+        <div className={css({ ...authNumberWrapperStyles })}>
           <TextField
             value="fds"
             placeholder="인증번호를 입력해주세요."
             className={css({ ...authNumberInputStyles })}
           />
-          <span>3:00</span>
+          <span className={css({ ...timeStyles })}>3:00</span>
         </div>
       </section>
       {children}
@@ -74,10 +74,31 @@ const phoneInputStyles = css.raw({
 
 const authNumberInputStyles = css.raw({
   width: "42rem",
+  height: "48px",
 
   "@media (max-width: 480px)": {
     width: "100%",
   },
+});
+
+const timeStyles = css.raw({
+  textStyle: "body-2-16-m",
+  color: "white",
+
+  "@media (max-width: 480px)": {
+    textStyle: "body-3-14-m",
+  },
+});
+
+const authNumberWrapperStyles = css.raw({
+  display: "flex",
+  flexGrow: 0,
+  alignItems: "center",
+  columnGap: "0.8rem",
+  paddingRight: "1.6rem",
+  borderRadius: "10px",
+
+  backgroundColor: "gray.800",
 });
 
 const completeButtonStyles = css.raw({
