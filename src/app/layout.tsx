@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@sopt-makers/ui/dist/index.css";
 import { css } from "@/styled-system/css";
 
 export const metadata: Metadata = {
