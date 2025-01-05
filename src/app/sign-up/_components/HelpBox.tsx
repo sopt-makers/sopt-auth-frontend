@@ -30,7 +30,6 @@ const infoWrapperStyles = css.raw({
   columnGap: "1rem",
   border: "1px solid",
   borderColor: "blueAlpha.600",
-  marginTop: "4.1rem",
   padding: "1.4rem 1.8rem",
   borderRadius: "18px",
   backgroundColor: "blueAlpha.100",

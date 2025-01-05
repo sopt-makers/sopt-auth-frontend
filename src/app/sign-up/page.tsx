@@ -18,7 +18,10 @@ function page() {
       </Step.Root>
       <Title />
       <AuthSection>
-        <Link href="https://docs.google.com/forms/d/e/1FAIpQLSdBxksqlkAHShYdQYxDIK1Mnsy45MbYMkEeGuCMpeXjn6C1NQ/viewform">
+        <Link
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdBxksqlkAHShYdQYxDIK1Mnsy45MbYMkEeGuCMpeXjn6C1NQ/viewform"
+          className={css({ ...linkStyles })}
+        >
           <HelpBox />
         </Link>
       </AuthSection>
@@ -36,4 +39,8 @@ const mainWrapperStyles = css.raw({
   "@media (max-width: 480px)": {
     height: "100dvh",
   },
+});
+
+const linkStyles = css.raw({
+  marginTop: "4.1rem",
 });
