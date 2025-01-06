@@ -13,14 +13,12 @@ function page() {
         <Step.Connector />
         <Step.Circle stepNumber={2} text="소셜 계정 연동" />
       </Step.Root>
-
       <h1 className={css({ ...mainTextStyles })}>SOPT 회원인증</h1>
       <p className={css({ ...textStyles, ...descriptionStyles })}>
         이곳은 SOPT 회원만을 위한 공간이에요.
         <br />
         SOPT 회원인증을 위해 전화번호를 입력해 주세요.
       </p>
-
       <AuthSection>
         <Link
           href="https://docs.google.com/forms/d/e/1FAIpQLSdBxksqlkAHShYdQYxDIK1Mnsy45MbYMkEeGuCMpeXjn6C1NQ/viewform"

@@ -16,10 +16,10 @@ function StepCircle({
   isCompleted,
 }: StepCircleProps) {
   return (
-    <div className={stepWrapper}>
+    <div className={css({ ...stepWrapperStyles })}>
       <div
         className={cx(
-          stepCircle,
+          stepCircleStyles,
           isActive || isCompleted
             ? activeBackgroundStyles
             : inactiveBackgroundStyles
@@ -28,14 +28,14 @@ function StepCircle({
         {isCompleted ? (
           <IconCheck />
         ) : (
-          <span className={circleText}>{stepNumber}</span>
+          <span className={css({ ...circleTextStyles })}>{stepNumber}</span>
         )}
       </div>
       <span
         className={cx(
-          stepText,
-          isActive && activeText,
-          !isActive && inactiveText
+          stepTextStyles,
+          isActive && activeTextStyles,
+          !isActive && inactiveTextStyles
         )}
       >
         {text}
@@ -52,7 +52,7 @@ export function StepConnector({ isCompleted = false }: StepConnectorProps) {
   return (
     <div
       className={cx(
-        connector,
+        connectorStyles,
         isCompleted ? activeBackgroundStyles : inactiveBackgroundStyles
       )}
     />
@@ -64,7 +64,7 @@ interface StepRootProps {
 }
 
 function StepRoot({ children }: StepRootProps) {
-  return <div className={stepContainer}>{children}</div>;
+  return <div className={stepContainerStyles}>{children}</div>;
 }
 
 const Step = {
@@ -75,7 +75,7 @@ const Step = {
 
 export default Step;
 
-const stepWrapper = css({
+const stepWrapperStyles = css.raw({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -84,7 +84,7 @@ const stepWrapper = css({
   color: "white",
 });
 
-const stepCircle = css({
+const stepCircleStyles = css({
   width: "2.8rem",
   height: "2.8rem",
   borderRadius: "50%",
@@ -107,7 +107,7 @@ const activeBackgroundStyles = css({
   backgroundColor: "#346DFF",
 });
 
-const circleText = css({
+const circleTextStyles = css.raw({
   fontSize: "15px",
   fontWeight: "600",
   color: "white",
@@ -117,7 +117,7 @@ const circleText = css({
   },
 });
 
-const stepText = css({
+const stepTextStyles = css({
   fontSize: "14px",
   fontWeight: "600",
 
@@ -126,15 +126,15 @@ const stepText = css({
   },
 });
 
-const activeText = css({
+const activeTextStyles = css({
   color: "white",
 });
 
-const inactiveText = css({
+const inactiveTextStyles = css({
   color: "gray.400",
 });
 
-const connector = css({
+const connectorStyles = css({
   position: "absolute",
   top: "calc(2.4rem / 2)",
   left: "50%",
@@ -144,7 +144,7 @@ const connector = css({
   fontFamily: "SUIT",
 });
 
-const stepContainer = css({
+const stepContainerStyles = css({
   position: "relative",
   display: "flex",
   alignItems: "center",
