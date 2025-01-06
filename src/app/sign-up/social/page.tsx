@@ -38,6 +38,7 @@ const mainWrapperStyles = css.raw({
   display: "flex",
   height: "100vh",
   flexDirection: "column",
+  alignItems: "center",
 
   "@media (max-width: 480px)": {
     height: "100dvh",

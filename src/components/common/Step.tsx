@@ -26,7 +26,7 @@ function StepCircle({
         )}
       >
         {isCompleted ? (
-          <IconCheck />
+          <IconCheck className={css({ ...chevronRightStyles })} />
         ) : (
           <span className={css({ ...circleTextStyles })}>{stepNumber}</span>
         )}
@@ -107,6 +107,11 @@ const activeBackgroundStyles = css({
   backgroundColor: "#346DFF",
 });
 
+const chevronRightStyles = css.raw({
+  width: "2.2rem",
+  height: "2.2rem",
+});
+
 const circleTextStyles = css.raw({
   fontSize: "15px",
   fontWeight: "600",
@@ -136,12 +141,17 @@ const inactiveTextStyles = css({
 
 const connectorStyles = css({
   position: "absolute",
-  top: "calc(2.4rem / 2)",
+  top: "calc(2.8rem / 2)",
   left: "50%",
   transform: "translateX(-50%)",
   width: "calc(100% - (2.4rem * 2 + 36px) )",
   height: "1px",
   fontFamily: "SUIT",
+
+  "@media (max-width: 480px)": {
+    top: "calc(2.2rem / 2)",
+    width: "calc(100% - (2.2rem * 2 + 36px) )",
+  },
 });
 
 const stepContainerStyles = css({
@@ -149,10 +159,12 @@ const stepContainerStyles = css({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  width: "100%",
+  width: "42rem",
+
   marginTop: "6.9rem",
 
   "@media (max-width: 480px)": {
+    width: "100%",
     marginTop: "4.8rem",
   },
 });
