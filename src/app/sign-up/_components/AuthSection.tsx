@@ -1,35 +1,112 @@
-import { ReactNode } from "react";
+"use client";
+
+import { ReactNode, ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button, TextField } from "@sopt-makers/ui";
-import { css } from "@/styled-system/css";
+import { css, cx } from "@/styled-system/css";
+import { useTimer } from "../_hooks/useTimer";
+import { formatTime } from "../_utils";
 
 interface AuthSectionProps {
   children?: ReactNode;
 }
 
 function AuthSection({ children }: AuthSectionProps) {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [authNumber, setAuthNumber] = useState("");
+  const [authNumberErrorMessage, setAuthNumberErrorMessage] = useState("");
+  const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState("");
+  const [authButtonText, setAuthButtonText] = useState<
+    "인증번호 받기" | "재전송하기"
+  >("인증번호 받기");
+  const [isActive, setIsActive] = useState(false);
+
+  const router = useRouter();
+
+  const handleChangedPhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(e.target.value);
+  };
+
+  const handleChangeAuthNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    setAuthNumber(e.target.value);
+  };
+
+  const timerCallback = () => {
+    setAuthNumberErrorMessage(
+      "3분이 초과되었어요. 인증번호를 다시 요청해주세요."
+    );
+    setIsActive(false);
+  };
+
+  const { timeLeft, resetTime } = useTimer(isActive, timerCallback, 10);
+
+  const handleSendAuthNumber = () => {
+    // LINK: https://www.notion.so/sopt-makers/8060b434d6db47aba4a32be0ef009d31?pvs=4
+    // TODO: API 함수 작성
+
+    if (phoneNumber === "") {
+      setPhoneNumberErrorMessage("전화번호를 확인해주세요.");
+    } else {
+      setAuthButtonText("재전송하기");
+      setAuthNumberErrorMessage("");
+      setPhoneNumberErrorMessage("");
+      resetTime();
+      setIsActive(true);
+    }
+  };
+
+  const handleAuthComplete = () => {
+    // LINK: https://www.notion.so/sopt-makers/ded309d5ff9a40a184c25816eb96e084?pvs=4
+    // TODO: API 함수 작성
+
+    router.push("/sign-up/social");
+  };
+
   return (
     <>
       <section className={css({ ...authSectionStyles })}>
         <h3 className={css({ ...phoneTitleStyles })}>전화번호</h3>
         <div className={css({ ...phoneWrapperStyles })}>
           <TextField
-            value="fs"
-            placeholder="전화번호를 입력해주세요."
+            value={phoneNumber}
+            onChange={handleChangedPhoneNumber}
+            placeholder="010XXXXXXXX"
+            isError={phoneNumberErrorMessage.length > 0}
+            errorMessage={phoneNumberErrorMessage}
             className={css({ ...phoneInputStyles })}
           />
-          <Button>인증번호 받기</Button>
+          <Button onClick={handleSendAuthNumber}>{authButtonText}</Button>
         </div>
         <div className={css({ ...authNumberWrapperStyles })}>
           <TextField
-            value="fds"
+            value={authNumber}
+            onChange={handleChangeAuthNumber}
             placeholder="인증번호를 입력해주세요."
+            isError={authNumberErrorMessage.length > 0}
+            errorMessage={authNumberErrorMessage}
             className={css({ ...authNumberInputStyles })}
           />
-          <span className={css({ ...timeStyles })}>3:00</span>
+          <span
+            className={cx(
+              timeStyles,
+              authNumberErrorMessage.length > 0 && errorTextStyles
+            )}
+          >
+            {timeLeft === 180 ? "3:00" : formatTime(timeLeft)}
+          </span>
         </div>
       </section>
       {children}
-      <Button size="lg" className={css({ ...completeButtonStyles })}>
+      <Button
+        size="lg"
+        disabled={
+          !isActive ||
+          authNumber.length === 0 ||
+          authNumberErrorMessage.length > 0
+        }
+        onClick={handleAuthComplete}
+        className={css({ ...completeButtonStyles })}
+      >
         SOPT 회원인증 완료
       </Button>
     </>
@@ -81,7 +158,9 @@ const authNumberInputStyles = css.raw({
   },
 });
 
-const timeStyles = css.raw({
+const timeStyles = css({
+  position: "absolute",
+  right: "1.6rem",
   textStyle: "body-2-16-m",
   color: "white",
 
@@ -90,15 +169,14 @@ const timeStyles = css.raw({
   },
 });
 
-const authNumberWrapperStyles = css.raw({
-  display: "flex",
-  flexGrow: 0,
-  alignItems: "center",
-  columnGap: "0.8rem",
-  paddingRight: "1.6rem",
-  borderRadius: "10px",
+const errorTextStyles = css({
+  color: "red.400",
+});
 
-  backgroundColor: "gray.800",
+const authNumberWrapperStyles = css.raw({
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
 });
 
 const completeButtonStyles = css.raw({
