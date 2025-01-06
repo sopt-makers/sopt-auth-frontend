@@ -3,7 +3,7 @@
 import { css } from "@/styled-system/css";
 import { IconChevronRight } from "@sopt-makers/icons";
 import { useState } from "react";
-import CannotLoginModal from "./CannotLoginModal";
+import CannotLoginModal from "@/src/components/common/CannotLoginModal";
 
 function ReLoginSection() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

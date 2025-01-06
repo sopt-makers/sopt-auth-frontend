@@ -11,13 +11,12 @@ interface StepCircleProps {
   isCompleted?: boolean;
 }
 
-const StepCircle = ({
+function StepCircle({
   stepNumber,
   text,
   isActive,
   isCompleted,
-}: StepCircleProps) => {
-  console.log(isActive);
+}: StepCircleProps) {
   return (
     <div className={stepWrapper}>
       <div
@@ -45,28 +44,30 @@ const StepCircle = ({
       </span>
     </div>
   );
-};
+}
 
 interface StepConnectorProps {
   isCompleted?: boolean;
 }
 
-export const StepConnector = ({ isCompleted = false }: StepConnectorProps) => (
-  <div
-    className={cx(
-      connector,
-      isCompleted ? activeBackgroundStyles : inactiveBackgroundStyles
-    )}
-  />
-);
+export function StepConnector({ isCompleted = false }: StepConnectorProps) {
+  return (
+    <div
+      className={cx(
+        connector,
+        isCompleted ? activeBackgroundStyles : inactiveBackgroundStyles
+      )}
+    />
+  );
+}
 
 interface StepRootProps {
   children: ReactNode;
 }
 
-const StepRoot = ({ children }: StepRootProps) => {
+function StepRoot({ children }: StepRootProps) {
   return <div className={stepContainer}>{children}</div>;
-};
+}
 
 const Step = {
   Root: StepRoot,

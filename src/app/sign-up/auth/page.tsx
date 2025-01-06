@@ -3,10 +3,10 @@
 import { css } from "@/styled-system/css";
 import Link from "next/link";
 import React from "react";
-import Step from "./_components/Step";
-import Title from "./_components/Title";
-import AuthSection from "./_components/AuthSection";
-import HelpBox from "./_components/HelpBox";
+import Step from "@/src/components/common/Step";
+import Title from "@/src/components/common/Title";
+import AuthSection from "@/src/components/common/AuthSection";
+import HelpBox from "@/src/components/sign-up/HelpBox";
 
 function page() {
   return (

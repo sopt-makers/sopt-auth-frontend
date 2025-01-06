@@ -4,8 +4,8 @@ import { ReactNode, ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, TextField } from "@sopt-makers/ui";
 import { css, cx } from "@/styled-system/css";
-import { useTimer } from "../_hooks/useTimer";
-import { formatTime } from "../_utils";
+import { useTimer } from "@/src/hooks/useTimer";
+import { formatTime } from "@/src/utils/formatter";
 
 interface AuthSectionProps {
   children?: ReactNode;
