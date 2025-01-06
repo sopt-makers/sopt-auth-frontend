@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Step from "@/src/components/common/Step";
 import AuthSection from "@/src/components/common/AuthSection";
-import HelpBox from "@/src/components/sign-up/HelpBox";
+import AuthFailHelper from "@/src/components/sign-up/AuthFailHelper";
 import GoBackButton from "@/src/components/common/GoBackButton";
 
 function page() {
@@ -28,7 +28,7 @@ function page() {
           href="https://docs.google.com/forms/d/e/1FAIpQLSdBxksqlkAHShYdQYxDIK1Mnsy45MbYMkEeGuCMpeXjn6C1NQ/viewform"
           className={css({ ...linkStyles })}
         >
-          <HelpBox />
+          <AuthFailHelper />
         </Link>
       </AuthSection>
     </main>
