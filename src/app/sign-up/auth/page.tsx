@@ -4,10 +4,14 @@ import React from "react";
 import Step from "@/src/components/common/Step";
 import AuthSection from "@/src/components/common/AuthSection";
 import HelpBox from "@/src/components/sign-up/HelpBox";
+import GoBackButton from "@/src/components/common/GoBackButton";
 
 function page() {
   return (
     <main className={css({ ...mainWrapperStyles })}>
+      <div className={css({ ...goBackButtonWrapperStyles })}>
+        <GoBackButton />
+      </div>
       <Step.Root>
         <Step.Circle stepNumber={1} text="SOPT 회원인증" isActive />
         <Step.Connector />
@@ -34,6 +38,7 @@ function page() {
 export default page;
 
 const mainWrapperStyles = css.raw({
+  position: "relative",
   display: "flex",
   height: "100vh",
   flexDirection: "column",
@@ -73,4 +78,14 @@ const textStyles = css.raw({
 const descriptionStyles = css.raw({
   textAlign: "center",
   margin: "1.4rem auto 0 auto",
+});
+
+const goBackButtonWrapperStyles = css.raw({
+  position: "absolute",
+  top: "1.2rem",
+  visibility: "hidden",
+
+  "@media (max-width:480px)": {
+    visibility: "visible",
+  },
 });
