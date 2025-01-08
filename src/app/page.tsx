@@ -1,5 +1,5 @@
 import { css } from "@/styled-system/css";
-import LoginSection from "../components/LoginSection";
+import LoginSection from "@/src/components/main/LoginSection";
 import Link from "next/link";
 
 export default function Home() {

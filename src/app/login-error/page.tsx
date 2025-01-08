@@ -1,4 +1,4 @@
-import ReLoginSection from "@/src/components/ReLoginSection";
+import ReLoginSection from "@/src/components/login-error/ReLoginSection";
 import { css } from "@/styled-system/css";
 import Link from "next/link";
 import React from "react";
