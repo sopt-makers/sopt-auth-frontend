@@ -9,9 +9,10 @@ import { formatTime } from "@/src/utils/formatter";
 
 interface AuthSectionProps {
   children?: ReactNode;
+  nextURL: string;
 }
 
-function AuthSection({ children }: AuthSectionProps) {
+function AuthSection({ children, nextURL }: AuthSectionProps) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [authNumber, setAuthNumber] = useState("");
   const [authNumberErrorMessage, setAuthNumberErrorMessage] = useState("");
@@ -59,7 +60,7 @@ function AuthSection({ children }: AuthSectionProps) {
     // LINK: https://www.notion.so/sopt-makers/ded309d5ff9a40a184c25816eb96e084?pvs=4
     // TODO: API 함수 작성
 
-    router.push("/sign-up/social");
+    router.push(nextURL);
   };
 
   return (

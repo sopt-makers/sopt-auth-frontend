@@ -23,7 +23,7 @@ function page() {
         <br />
         SOPT 회원인증을 위해 전화번호를 입력해 주세요.
       </p>
-      <AuthSection>
+      <AuthSection nextURL="/sign-up/social">
         <Link
           href="https://docs.google.com/forms/d/e/1FAIpQLSdBxksqlkAHShYdQYxDIK1Mnsy45MbYMkEeGuCMpeXjn6C1NQ/viewform"
           className={css({ ...linkStyles })}
