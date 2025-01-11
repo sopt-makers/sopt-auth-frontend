@@ -3,6 +3,7 @@ import { type MouseEvent } from "react";
 import CannotLoginModalPortal from "./CannotLoginModalPortal";
 import { IconAlertCircle } from "@sopt-makers/icons";
 import CannotLoginModalButton from "./CannotLoginModalButton";
+import Link from "next/link";
 
 interface CannotLoginModalProps {
   handleCloseModal: () => void;
@@ -10,10 +11,6 @@ interface CannotLoginModalProps {
 
 function CannotLoginModal({ handleCloseModal }: CannotLoginModalProps) {
   const handleClickLoginAccountButton = (
-    e: MouseEvent<HTMLButtonElement>
-  ) => {};
-
-  const handleClickResetAccountButton = (
     e: MouseEvent<HTMLButtonElement>
   ) => {};
 
@@ -43,9 +40,11 @@ function CannotLoginModal({ handleCloseModal }: CannotLoginModalProps) {
             <CannotLoginModalButton onClick={handleClickLoginAccountButton}>
               로그인한 계정을 알고 싶어요.
             </CannotLoginModalButton>
-            <CannotLoginModalButton onClick={handleClickResetAccountButton}>
-              소셜 계정을 재설정하고 싶어요.
-            </CannotLoginModalButton>
+            <Link href="/social-account-linking/auth">
+              <CannotLoginModalButton>
+                소셜 계정을 재설정하고 싶어요.
+              </CannotLoginModalButton>
+            </Link>
             <CannotLoginModalButton onClick={handleClickKakaoChannelButton}>
               카카오톡 채널에 문의할게요.
             </CannotLoginModalButton>
