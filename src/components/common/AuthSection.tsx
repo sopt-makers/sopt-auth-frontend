@@ -9,7 +9,7 @@ import { formatTime } from "@/src/utils/formatter";
 
 interface AuthSectionProps {
   children?: ReactNode;
-  nextURL: string;
+  nextURL: "/sign-up/social" | "/social-account-linking/social";
 }
 
 function AuthSection({ children, nextURL }: AuthSectionProps) {
