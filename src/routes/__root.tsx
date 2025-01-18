@@ -7,7 +7,6 @@ import "@sopt-makers/ui/dist/index.css";
 export const Route = createRootRoute({
   component: () => (
     <>
-      <div id="modal"></div>
       <div
         className={css({
           ...rootLayoutStyle,
