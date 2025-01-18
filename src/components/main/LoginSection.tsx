@@ -7,7 +7,7 @@ import { IconChevronRight } from "@sopt-makers/icons";
 import LastLoggedInBanner from "./LastLoggedInBanner";
 import CannotLoginModal from "@/src/components/common/CannotLoginModal";
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 
 function LoginSection() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -49,7 +49,7 @@ function LoginSection() {
           <span className={css({ ...orTextStyles })}>또는</span>
           <div className={css({ ...orLineStyles })} />
         </div>
-        <Link href="/sign-up/auth">
+        <Link to="/sign-up/auth">
           <button className={css({ ...signUpButtonStyles })}>
             SOPT 회원가입
           </button>

@@ -1,8 +1,13 @@
 import { css } from "@/styled-system/css";
 import LoginSection from "@/src/components/main/LoginSection";
-import Link from "next/link";
 
-export default function Home() {
+import { createLazyFileRoute } from "@tanstack/react-router";
+
+export const Route = createLazyFileRoute("/")({
+  component: Index,
+});
+
+export default function Index() {
   return (
     <>
       <main className={css({ ...mainWrapperStyles })}>
@@ -37,7 +42,7 @@ export default function Home() {
           All rights reserved by
         </span>
         <div className={css({ ...linkWrapperStyles })}>
-          <Link href="https://www.sopt.org">
+          <a href="https://www.sopt.org">
             <img
               className={css({
                 ...soptImgStyles,
@@ -45,8 +50,8 @@ export default function Home() {
               src="/sopt.png"
               alt="sopt 로고"
             />
-          </Link>
-          <Link href="https://makers.sopt.org">
+          </a>
+          <a href="https://makers.sopt.org">
             <img
               className={css({
                 ...makersImgStyles,
@@ -54,7 +59,7 @@ export default function Home() {
               src="/makers.png"
               alt="makers 로고"
             />
-          </Link>
+          </a>
         </div>
       </footer>
     </>

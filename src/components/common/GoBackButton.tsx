@@ -2,12 +2,12 @@
 
 import { css } from "@/styled-system/css";
 import { IconChevronLeft } from "@sopt-makers/icons";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "@tanstack/react-router";
 
 function GoBackButton() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const handleClick = () => {
-    router.back();
+    navigate({ to: ".." });
   };
 
   return (

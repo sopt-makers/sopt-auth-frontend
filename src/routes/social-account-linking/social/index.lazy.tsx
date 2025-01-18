@@ -1,8 +1,13 @@
 import { css } from "@/styled-system/css";
 import Step from "@/src/components/common/Step";
 import LoginButton from "@/src/components/main/LoginButton";
+import { createLazyFileRoute } from "@tanstack/react-router";
 
-function page() {
+export const Route = createLazyFileRoute("/social-account-linking/social/")({
+  component: Index,
+});
+
+function Index() {
   const name = "ㅇㅇㅇ";
 
   return (
@@ -10,13 +15,13 @@ function page() {
       <Step.Root>
         <Step.Circle stepNumber={1} text="SOPT 회원인증" isCompleted />
         <Step.Connector isCompleted />
-        <Step.Circle stepNumber={2} text="소셜 계정 연동" isActive />
+        <Step.Circle stepNumber={2} text="소셜 계정 재설정" isActive />
       </Step.Root>
-      <h1 className={css({ ...mainTextStyles })}>소셜 계정 연동</h1>
+      <h1 className={css({ ...mainTextStyles })}>소셜 계정 재설정</h1>
       <p className={css({ ...textStyles, ...descriptionStyles })}>
         {`반갑습니다 ${name}님`}
         <br />
-        소셜로그인을 진행하여 회원가입을 완료해주세요
+        소셜로그인을 진행하여 소셜 계정 재설정을 완료해주세요
       </p>
       <section className={css({ ...loginButtonSectionStyles })}>
         <LoginButton
@@ -32,7 +37,7 @@ function page() {
   );
 }
 
-export default page;
+export default Index;
 
 const mainWrapperStyles = css.raw({
   display: "flex",

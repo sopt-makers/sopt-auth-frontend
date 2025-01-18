@@ -1,12 +1,15 @@
 import { css } from "@/styled-system/css";
-import Link from "next/link";
-import React from "react";
 import Step from "@/src/components/common/Step";
 import AuthSection from "@/src/components/common/AuthSection";
 import AuthFailHelper from "@/src/components/sign-up/AuthFailHelper";
 import GoBackButton from "@/src/components/common/GoBackButton";
+import { createLazyFileRoute } from "@tanstack/react-router";
 
-function page() {
+export const Route = createLazyFileRoute("/sign-up/auth/")({
+  component: Index,
+});
+
+function Index() {
   return (
     <main className={css({ ...mainWrapperStyles })}>
       <div className={css({ ...goBackButtonWrapperStyles })}>
@@ -15,7 +18,7 @@ function page() {
       <Step.Root>
         <Step.Circle stepNumber={1} text="SOPT 회원인증" isActive />
         <Step.Connector />
-        <Step.Circle stepNumber={2} text="소셜 계정 재설정" />
+        <Step.Circle stepNumber={2} text="소셜 계정 연동" />
       </Step.Root>
       <h1 className={css({ ...mainTextStyles })}>SOPT 회원인증</h1>
       <p className={css({ ...textStyles, ...descriptionStyles })}>
@@ -23,12 +26,19 @@ function page() {
         <br />
         SOPT 회원인증을 위해 전화번호를 입력해 주세요.
       </p>
-      <AuthSection nextURL="/social-account-linking/social" />
+      <AuthSection nextURL="/sign-up/social">
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdBxksqlkAHShYdQYxDIK1Mnsy45MbYMkEeGuCMpeXjn6C1NQ/viewform"
+          className={css({ ...linkStyles })}
+        >
+          <AuthFailHelper />
+        </a>
+      </AuthSection>
     </main>
   );
 }
 
-export default page;
+export default Index;
 
 const mainWrapperStyles = css.raw({
   position: "relative",

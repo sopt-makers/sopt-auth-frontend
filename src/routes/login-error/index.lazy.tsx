@@ -1,9 +1,12 @@
 import ReLoginSection from "@/src/components/login-error/ReLoginSection";
 import { css } from "@/styled-system/css";
-import Link from "next/link";
-import React from "react";
+import { createLazyFileRoute } from "@tanstack/react-router";
 
-function page() {
+export const Route = createLazyFileRoute("/login-error/")({
+  component: Index,
+});
+
+function Index() {
   return (
     <div className={css({ ...pageWrapperStyles })}>
       <main className={css({ ...mainWrapperStyles })}>
@@ -38,7 +41,7 @@ function page() {
         >
           이 서비스를 만든 SOPT makers가 궁금하다면?
         </span>
-        <Link href="https://makers.sopt.org">
+        <a href="https://makers.sopt.org">
           <img
             className={css({
               ...makersImgStyles,
@@ -46,13 +49,11 @@ function page() {
             src="/makers.png"
             alt="makers 로고"
           />
-        </Link>
+        </a>
       </footer>
     </div>
   );
 }
-
-export default page;
 
 const pageWrapperStyles = css.raw({
   display: "flex",
