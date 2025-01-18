@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, ChangeEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "@tanstack/react-router";
 import { Button, TextField } from "@sopt-makers/ui";
 import { css, cx } from "@/styled-system/css";
 import { useTimer } from "@/src/hooks/useTimer";
@@ -22,7 +22,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   >("인증번호 받기");
   const [isActive, setIsActive] = useState(false);
 
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handleChangedPhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(e.target.value);
@@ -60,7 +60,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
     // LINK: https://www.notion.so/sopt-makers/ded309d5ff9a40a184c25816eb96e084?pvs=4
     // TODO: API 함수 작성
 
-    router.push(nextURL);
+    navigate({ to: nextURL });
   };
 
   return (

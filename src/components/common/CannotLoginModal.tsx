@@ -3,7 +3,7 @@ import { type MouseEvent } from "react";
 import CannotLoginModalPortal from "./CannotLoginModalPortal";
 import { IconAlertCircle } from "@sopt-makers/icons";
 import CannotLoginModalButton from "./CannotLoginModalButton";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 
 interface CannotLoginModalProps {
   handleCloseModal: () => void;
