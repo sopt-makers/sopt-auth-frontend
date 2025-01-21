@@ -57,7 +57,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
       } catch (error) {
         if (error instanceof Error) {
           setPhoneNumberErrorMessage(
-            "인증번호 발송이 실패했습니다. 다시 시도해주세요."
+            "SOPT 활동 시 사용한 전화번호가 아니에요."
           );
         }
       }
