@@ -56,9 +56,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
         setIsActive(true);
       } catch (error) {
         if (error instanceof Error) {
-          setPhoneNumberErrorMessage(
-            "SOPT 활동 시 사용한 전화번호가 아니에요."
-          );
+          setPhoneNumberErrorMessage(error.message);
         }
       }
     }
