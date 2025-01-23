@@ -6,6 +6,7 @@ import { Button, TextField } from "@sopt-makers/ui";
 import { css, cx } from "@/styled-system/css";
 import { useTimer } from "@/src/hooks/useTimer";
 import { formatTime } from "@/src/utils/formatter";
+import { postAuthPhone } from "@/src/api/postAuthPhone";
 
 interface AuthSectionProps {
   children?: ReactNode;
@@ -41,18 +42,23 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
 
   const { timeLeft, resetTime } = useTimer(isActive, timerCallback, 10);
 
-  const handleSendAuthNumber = () => {
-    // LINK: https://www.notion.so/sopt-makers/8060b434d6db47aba4a32be0ef009d31?pvs=4
-    // TODO: API 함수 작성
-
+  const handleSendAuthNumber = async () => {
     if (phoneNumber === "") {
       setPhoneNumberErrorMessage("전화번호를 확인해주세요.");
     } else {
-      setAuthButtonText("재전송하기");
-      setAuthNumberErrorMessage("");
-      setPhoneNumberErrorMessage("");
-      resetTime();
-      setIsActive(true);
+      try {
+        await postAuthPhone(phoneNumber);
+
+        setAuthButtonText("재전송하기");
+        setAuthNumberErrorMessage("");
+        setPhoneNumberErrorMessage("");
+        resetTime();
+        setIsActive(true);
+      } catch (error) {
+        if (error instanceof Error) {
+          setPhoneNumberErrorMessage(error.message);
+        }
+      }
     }
   };
 
