@@ -1,3 +1,3 @@
-export const API_URL = {
+export const API_ENDPOINT = {
   LOGIN: "/api/v1/auth/login/web",
 };

@@ -1,5 +1,5 @@
 import { client } from "./client";
-import { API_URL } from "./constants/apiUrl";
+import { API_ENDPOINT } from "./constants/apiUrl";
 
 export interface PostLoginRequest {
   authPlatform: "GOOGLE" | "APPLE";
@@ -18,7 +18,7 @@ export const postLogin = async ({
   authPlatform,
   token,
 }: PostLoginRequest): Promise<PostLoginResponse> => {
-  const response = await client(API_URL.LOGIN, {
+  const response = await client(API_ENDPOINT.LOGIN, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
