@@ -7,6 +7,7 @@ import { css, cx } from "@/styled-system/css";
 import { useTimer } from "@/src/hooks/useTimer";
 import { formatTime } from "@/src/utils/formatter";
 import { postAuthPhone } from "@/src/api/postAuthPhone";
+import { postVerifyPhone } from "@/src/api/postVerifyPhone";
 
 interface AuthSectionProps {
   children?: ReactNode;
@@ -50,6 +51,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
         await postAuthPhone(phoneNumber);
 
         setAuthButtonText("재전송하기");
+        setAuthNumber("");
         setAuthNumberErrorMessage("");
         setPhoneNumberErrorMessage("");
         resetTime();
@@ -62,11 +64,17 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
     }
   };
 
-  const handleAuthComplete = () => {
-    // LINK: https://www.notion.so/sopt-makers/ded309d5ff9a40a184c25816eb96e084?pvs=4
-    // TODO: API 함수 작성
+  const handleAuthComplete = async () => {
+    try {
+      await postVerifyPhone(phoneNumber, authNumber);
 
-    navigate({ to: nextURL });
+      setAuthNumberErrorMessage("");
+      navigate({ to: nextURL });
+    } catch (error) {
+      if (error instanceof Error) {
+        setAuthNumberErrorMessage(error.message);
+      }
+    }
   };
 
   return (
