@@ -16,6 +16,7 @@
     "@sopt-makers/icons": "^1.0.6",
     "@sopt-makers/ui": "^2.7.6",
     "@tanstack/react-router": "^1.97.1",
+    "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

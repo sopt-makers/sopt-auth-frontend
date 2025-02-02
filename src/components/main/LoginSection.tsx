@@ -8,6 +8,7 @@ import LastLoggedInBanner from "./LastLoggedInBanner";
 import CannotLoginModal from "@/src/components/common/CannotLoginModal";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { getGoogleAuthUrl } from "@/src/utils/google";
 
 function LoginSection() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -20,6 +21,13 @@ function LoginSection() {
     setIsModalOpen(false);
   };
 
+  const handleGoogleLogin = () => {
+    location.href = getGoogleAuthUrl();
+  };
+
+  // TODO: Apple Login 구현
+  // const handleAppleLogin = () => {};
+
   return (
     <>
       {isModalOpen && <CannotLoginModal handleCloseModal={handleCloseModal} />}
@@ -27,6 +35,7 @@ function LoginSection() {
         <LastLoggedInBanner />
         <section className={css({ ...loginButtonSectionStyles })}>
           <LoginButton
+            onClick={handleGoogleLogin}
             buttonText="Google로 로그인"
             buttonIcon={<img src="/google.svg" alt="구글 로고" />}
           />
