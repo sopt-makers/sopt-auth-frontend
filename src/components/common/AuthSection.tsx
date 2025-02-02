@@ -20,8 +20,8 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   const [authNumberErrorMessage, setAuthNumberErrorMessage] = useState("");
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState("");
   const [authButtonText, setAuthButtonText] = useState<
-    "인증번호 받기" | "재전송하기"
-  >("인증번호 받기");
+    "전송하기" | "재전송하기"
+  >("전송하기");
   const [isActive, setIsActive] = useState(false);
 
   const navigate = useNavigate();
