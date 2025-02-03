@@ -20,8 +20,8 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   const [authNumberErrorMessage, setAuthNumberErrorMessage] = useState("");
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState("");
   const [authButtonText, setAuthButtonText] = useState<
-    "인증번호 받기" | "재전송하기"
-  >("인증번호 받기");
+    "전송하기" | "재전송하기"
+  >("전송하기");
   const [isActive, setIsActive] = useState(false);
 
   const navigate = useNavigate();
@@ -90,7 +90,12 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
             errorMessage={phoneNumberErrorMessage}
             className={css({ ...phoneInputStyles })}
           />
-          <Button onClick={handleSendAuthNumber}>{authButtonText}</Button>
+          <Button
+            className={css({ ...sendAuthNumberButtonStyles })}
+            onClick={handleSendAuthNumber}
+          >
+            {authButtonText}
+          </Button>
         </div>
         <div className={css({ ...authNumberWrapperStyles })}>
           <TextField
@@ -201,5 +206,13 @@ const completeButtonStyles = css.raw({
   "@media (max-width: 480px)": {
     marginTop: "auto",
     marginBottom: "3.4rem",
+  },
+});
+
+const sendAuthNumberButtonStyles = css.raw({
+  width: "11.6rem",
+
+  "@media (max-width: 480px)": {
+    width: "11rem",
   },
 });
