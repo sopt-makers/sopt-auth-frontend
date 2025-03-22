@@ -1,7 +1,7 @@
 interface PostAuthPhoneResponse {
   success: boolean;
   message: string;
-  data: any;
+  data: unknown;
 }
 
 export const postAuthPhone = async (phone: string) => {

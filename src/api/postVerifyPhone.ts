@@ -1,7 +1,7 @@
 interface PostVerifyPhoneResponse {
   success: boolean;
   message: string;
-  data: any;
+  data: unknown;
 }
 
 export const postVerifyPhone = async (phone: string, code: string) => {
