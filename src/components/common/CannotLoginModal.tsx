@@ -10,13 +10,14 @@ interface CannotLoginModalProps {
 }
 
 function CannotLoginModal({ handleCloseModal }: CannotLoginModalProps) {
-  const handleClickLoginAccountButton = (
-    e: MouseEvent<HTMLButtonElement>
-  ) => {};
+  const handleClickLoginAccountButton = () => {
+    /** navigate */
+  };
 
   const handleClickKakaoChannelButton = (
-    e: MouseEvent<HTMLButtonElement>
-  ) => {};
+  ) => {
+    /** navigate */
+  };
 
   const preventPropagation = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -40,7 +41,7 @@ function CannotLoginModal({ handleCloseModal }: CannotLoginModalProps) {
             <CannotLoginModalButton onClick={handleClickLoginAccountButton}>
               로그인한 계정을 알고 싶어요.
             </CannotLoginModalButton>
-            <Link href="/social-account-linking/auth">
+            <Link to="/social-account-linking/auth">
               <CannotLoginModalButton>
                 소셜 계정을 재설정하고 싶어요.
               </CannotLoginModalButton>
