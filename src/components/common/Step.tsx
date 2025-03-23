@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { css, cx } from "@/styled-system/css";
 import { IconCheck } from "@sopt-makers/icons";
 
