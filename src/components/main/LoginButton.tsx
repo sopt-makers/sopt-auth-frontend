@@ -1,7 +1,7 @@
 "use client";
 
 import { css } from "@/styled-system/css";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { ButtonHTMLAttributes } from "react";
 
 interface LoginButton extends ButtonHTMLAttributes<HTMLButtonElement> {
