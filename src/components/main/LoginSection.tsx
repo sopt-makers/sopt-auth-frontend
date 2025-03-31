@@ -22,7 +22,7 @@ function LoginSection() {
   };
 
   const handleGoogleLogin = () => {
-    location.href = getGoogleAuthUrl();
+    location.href = getGoogleAuthUrl({ state: "login" });
   };
 
   // TODO: Apple Login 구현
