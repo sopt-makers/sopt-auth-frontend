@@ -98,7 +98,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
             className={css({ ...authNumberInputStyles })}
           />
           <span className={cx(timeStyles, errorMessage.authNumber.length > 0 && errorTextStyles)}>
-            {timeLeft === 180 ? '3:00' : formatTime(timeLeft)}
+            {formatTime(timeLeft)}
           </span>
         </div>
       </section>
