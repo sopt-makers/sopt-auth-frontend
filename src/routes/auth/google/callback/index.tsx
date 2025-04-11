@@ -67,7 +67,7 @@ function Index() {
     }
   }, []);
 
-  return <></>;
+  return null;
 }
 
 export default Index;
