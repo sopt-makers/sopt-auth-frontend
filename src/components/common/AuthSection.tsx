@@ -29,10 +29,10 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
 
   const timerCallback = () => {
     setErrorMessage((prev) => ({ ...prev, authNumber: '3분이 초과되었어요. 인증번호를 다시 요청해주세요.' }));
-    stopTimer();
+    stop();
   };
 
-  const { timeLeft, resetTime, stopTimer, startTimer, isTimerActive } = useTimer(timerCallback);
+  const { timeLeft, reset, stop, start, isTimerActive } = useTimer(timerCallback);
 
   const handleSendAuthNumber = async () => {
     if (numberInput.phoneNumber === '') {
@@ -43,9 +43,9 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
 
         setAuthButtonText('재전송하기');
         setNumberInput((prev) => ({ ...prev, authNumber: '' }));
-        setErrorMessage((prev) => ({ phoneNumber: '', authNumber: '' }));
-        resetTime();
-        startTimer();
+        setErrorMessage({ phoneNumber: '', authNumber: '' });
+        reset();
+        start();
       } catch (error) {
         if (error instanceof Error) {
           setErrorMessage((prev) => ({ ...prev, phoneNumber: error.message }));

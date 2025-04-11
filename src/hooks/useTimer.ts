@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-export const useTimer = (
-  onResetTimer: () => void,
-  initialSeconds: number = 180
-) => {
+export const useTimer = (onResetTimer: () => void, initialSeconds: number = 180) => {
   const [isTimerActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(initialSeconds);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
 
   const stopTimer = () => {
     setIsActive(false);
@@ -52,5 +49,5 @@ export const useTimer = (
     };
   }, [isTimerActive, onResetTimer, initialSeconds]);
 
-  return { timeLeft, resetTime, stopTimer, startTimer, isTimerActive };
+  return { timeLeft, reset: resetTime, stop: stopTimer, start: startTimer, isTimerActive };
 };
