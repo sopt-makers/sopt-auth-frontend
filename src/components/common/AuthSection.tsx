@@ -13,8 +13,8 @@ interface AuthSectionProps {
 }
 
 function AuthSection({ children, nextURL }: AuthSectionProps) {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [authNumber, setAuthNumber] = useState('');
+  const [numberInput, setNumberInput] = useState({ phoneNumber: '', authNumber: '' });
+  const [errorMessage, setErrorMessage] = useState({ authNumber: '', phoneNumber: '' });
   const [authNumberErrorMessage, setAuthNumberErrorMessage] = useState('');
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
   const [authButtonText, setAuthButtonText] = useState<'전송하기' | '재전송하기'>('전송하기');
@@ -23,31 +23,30 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   const navigate = useNavigate();
 
   const handleChangedPhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
+    setNumberInput((prev) => ({ ...prev, phoneNumber: e.target.value }));
   };
 
   const handleChangeAuthNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    setAuthNumber(e.target.value);
+    setNumberInput((prev) => ({ ...prev, authNumber: e.target.value }));
   };
 
   const timerCallback = () => {
-    setAuthNumberErrorMessage('3분이 초과되었어요. 인증번호를 다시 요청해주세요.');
+    setErrorMessage((prev) => ({ ...prev, authNumber: '3분이 초과되었어요. 인증번호를 다시 요청해주세요.' }));
     setIsActive(false);
   };
 
   const { timeLeft, resetTime } = useTimer(isActive, timerCallback);
 
   const handleSendAuthNumber = async () => {
-    if (phoneNumber === '') {
+    if (numberInput.phoneNumber === '') {
       setPhoneNumberErrorMessage('전화번호를 확인해주세요.');
     } else {
       try {
-        await postAuthPhone(phoneNumber);
+        await postAuthPhone(numberInput.phoneNumber);
 
         setAuthButtonText('재전송하기');
-        setAuthNumber('');
-        setAuthNumberErrorMessage('');
-        setPhoneNumberErrorMessage('');
+        setNumberInput((prev) => ({ ...prev, authNumber: '' }));
+        setErrorMessage((prev) => ({ phoneNumber: '', authNumber: '' }));
         resetTime();
         setIsActive(true);
       } catch (error) {
@@ -60,7 +59,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
 
   const handleAuthComplete = async () => {
     try {
-      const response = await postVerifyPhone(phoneNumber, authNumber);
+      const response = await postVerifyPhone(numberInput.phoneNumber, numberInput.authNumber);
       const { name, phone } = response.data;
 
       sessionStorage.setItem('name', name);
@@ -81,7 +80,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
         <h3 className={css({ ...phoneTitleStyles })}>전화번호</h3>
         <div className={css({ ...phoneWrapperStyles })}>
           <TextField
-            value={phoneNumber}
+            value={numberInput.phoneNumber}
             onChange={handleChangedPhoneNumber}
             placeholder="010XXXXXXXX"
             isError={phoneNumberErrorMessage.length > 0}
@@ -94,7 +93,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
         </div>
         <div className={css({ ...authNumberWrapperStyles })}>
           <TextField
-            value={authNumber}
+            value={numberInput.authNumber}
             onChange={handleChangeAuthNumber}
             placeholder="인증번호를 입력해주세요."
             isError={authNumberErrorMessage.length > 0}
@@ -109,7 +108,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
       {children}
       <Button
         size="lg"
-        disabled={!isActive || authNumber.length === 0 || authNumberErrorMessage.length > 0}
+        disabled={!isActive || numberInput.authNumber.length === 0 || authNumberErrorMessage.length > 0}
         onClick={handleAuthComplete}
         className={css({ ...completeButtonStyles })}>
         SOPT 회원인증 완료
