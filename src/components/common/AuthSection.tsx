@@ -15,10 +15,7 @@ interface AuthSectionProps {
 function AuthSection({ children, nextURL }: AuthSectionProps) {
   const [numberInput, setNumberInput] = useState({ phoneNumber: '', authNumber: '' });
   const [errorMessage, setErrorMessage] = useState({ authNumber: '', phoneNumber: '' });
-  const [authNumberErrorMessage, setAuthNumberErrorMessage] = useState('');
-  const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
   const [authButtonText, setAuthButtonText] = useState<'전송하기' | '재전송하기'>('전송하기');
-  const [isActive, setIsActive] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,14 +29,14 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
 
   const timerCallback = () => {
     setErrorMessage((prev) => ({ ...prev, authNumber: '3분이 초과되었어요. 인증번호를 다시 요청해주세요.' }));
-    setIsActive(false);
+    stopTimer();
   };
 
-  const { timeLeft, resetTime } = useTimer(isActive, timerCallback);
+  const { timeLeft, resetTime, stopTimer, startTimer, isTimerActive } = useTimer(timerCallback);
 
   const handleSendAuthNumber = async () => {
     if (numberInput.phoneNumber === '') {
-      setPhoneNumberErrorMessage('전화번호를 확인해주세요.');
+      setErrorMessage((prev) => ({ ...prev, phoneNumber: '전화번호를 확인해주세요.' }));
     } else {
       try {
         await postAuthPhone(numberInput.phoneNumber);
@@ -48,10 +45,10 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
         setNumberInput((prev) => ({ ...prev, authNumber: '' }));
         setErrorMessage((prev) => ({ phoneNumber: '', authNumber: '' }));
         resetTime();
-        setIsActive(true);
+        startTimer();
       } catch (error) {
         if (error instanceof Error) {
-          setPhoneNumberErrorMessage(error.message);
+          setErrorMessage((prev) => ({ ...prev, phoneNumber: error.message }));
         }
       }
     }
@@ -65,11 +62,11 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
       sessionStorage.setItem('name', name);
       sessionStorage.setItem('phone', phone);
 
-      setAuthNumberErrorMessage('');
+      setErrorMessage((prev) => ({ ...prev, authNumber: '' }));
       navigate({ to: nextURL });
     } catch (error) {
       if (error instanceof Error) {
-        setAuthNumberErrorMessage(error.message);
+        setErrorMessage((prev) => ({ ...prev, authNumber: error.message }));
       }
     }
   };
@@ -83,8 +80,8 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
             value={numberInput.phoneNumber}
             onChange={handleChangedPhoneNumber}
             placeholder="010XXXXXXXX"
-            isError={phoneNumberErrorMessage.length > 0}
-            errorMessage={phoneNumberErrorMessage}
+            isError={errorMessage.phoneNumber.length > 0}
+            errorMessage={errorMessage.phoneNumber}
             className={css({ ...phoneInputStyles })}
           />
           <Button className={css({ ...sendAuthNumberButtonStyles })} onClick={handleSendAuthNumber}>
@@ -96,11 +93,11 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
             value={numberInput.authNumber}
             onChange={handleChangeAuthNumber}
             placeholder="인증번호를 입력해주세요."
-            isError={authNumberErrorMessage.length > 0}
-            errorMessage={authNumberErrorMessage}
+            isError={errorMessage.authNumber.length > 0}
+            errorMessage={errorMessage.authNumber}
             className={css({ ...authNumberInputStyles })}
           />
-          <span className={cx(timeStyles, authNumberErrorMessage.length > 0 && errorTextStyles)}>
+          <span className={cx(timeStyles, errorMessage.authNumber.length > 0 && errorTextStyles)}>
             {timeLeft === 180 ? '3:00' : formatTime(timeLeft)}
           </span>
         </div>
@@ -108,7 +105,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
       {children}
       <Button
         size="lg"
-        disabled={!isActive || numberInput.authNumber.length === 0 || authNumberErrorMessage.length > 0}
+        disabled={!isTimerActive || numberInput.authNumber.length === 0 || errorMessage.authNumber.length > 0}
         onClick={handleAuthComplete}
         className={css({ ...completeButtonStyles })}>
         SOPT 회원인증 완료
