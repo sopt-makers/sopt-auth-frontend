@@ -29,10 +29,9 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
 
   const timerCallback = () => {
     setErrorMessage((prev) => ({ ...prev, authNumber: '3분이 초과되었어요. 인증번호를 다시 요청해주세요.' }));
-    stop();
   };
 
-  const { timeLeft, reset, stop, start, isTimerActive } = useTimer(timerCallback);
+  const { timeLeft, reset, start, isTimerActive } = useTimer(timerCallback);
 
   const handleSendAuthNumber = async () => {
     if (numberInput.phoneNumber === '') {

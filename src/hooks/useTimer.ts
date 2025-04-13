@@ -5,10 +5,6 @@ export const useTimer = (onResetTimer: () => void, initialSeconds: number = 180)
   const [timeLeft, setTimeLeft] = useState(initialSeconds);
   const timerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
 
-  const stopTimer = () => {
-    setIsActive(false);
-  };
-
   const startTimer = () => {
     setIsActive(true);
   };
@@ -34,6 +30,7 @@ export const useTimer = (onResetTimer: () => void, initialSeconds: number = 180)
         setTimeLeft((prev) => {
           if (prev <= 1) {
             onResetTimer();
+            setIsActive(false);
             clearTimer();
             return 0;
           }
@@ -49,5 +46,5 @@ export const useTimer = (onResetTimer: () => void, initialSeconds: number = 180)
     };
   }, [isTimerActive, onResetTimer, initialSeconds]);
 
-  return { timeLeft, reset: resetTime, stop: stopTimer, start: startTimer, isTimerActive };
+  return { timeLeft, reset: resetTime, start: startTimer, isTimerActive };
 };
