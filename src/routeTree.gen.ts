@@ -8,79 +8,56 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
+import { Route as LoginErrorIndexImport } from './routes/login-error/index'
+import { Route as SocialAccountLinkingSocialIndexImport } from './routes/social-account-linking/social/index'
+import { Route as SocialAccountLinkingAuthIndexImport } from './routes/social-account-linking/auth/index'
+import { Route as SignUpSocialIndexImport } from './routes/sign-up/social/index'
+import { Route as SignUpAuthIndexImport } from './routes/sign-up/auth/index'
 import { Route as AuthGoogleCallbackIndexImport } from './routes/auth/google/callback/index'
-
-// Create Virtual Routes
-
-const IndexLazyImport = createFileRoute('/')()
-const LoginErrorIndexLazyImport = createFileRoute('/login-error/')()
-const SocialAccountLinkingSocialIndexLazyImport = createFileRoute(
-  '/social-account-linking/social/',
-)()
-const SocialAccountLinkingAuthIndexLazyImport = createFileRoute(
-  '/social-account-linking/auth/',
-)()
-const SignUpSocialIndexLazyImport = createFileRoute('/sign-up/social/')()
-const SignUpAuthIndexLazyImport = createFileRoute('/sign-up/auth/')()
 
 // Create/Update Routes
 
-const IndexLazyRoute = IndexLazyImport.update({
+const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
 
-const LoginErrorIndexLazyRoute = LoginErrorIndexLazyImport.update({
+const LoginErrorIndexRoute = LoginErrorIndexImport.update({
   id: '/login-error/',
   path: '/login-error/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/login-error/index.lazy').then((d) => d.Route),
-)
+} as any)
 
-const SocialAccountLinkingSocialIndexLazyRoute =
-  SocialAccountLinkingSocialIndexLazyImport.update({
+const SocialAccountLinkingSocialIndexRoute =
+  SocialAccountLinkingSocialIndexImport.update({
     id: '/social-account-linking/social/',
     path: '/social-account-linking/social/',
     getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/social-account-linking/social/index.lazy').then(
-      (d) => d.Route,
-    ),
-  )
+  } as any)
 
-const SocialAccountLinkingAuthIndexLazyRoute =
-  SocialAccountLinkingAuthIndexLazyImport.update({
+const SocialAccountLinkingAuthIndexRoute =
+  SocialAccountLinkingAuthIndexImport.update({
     id: '/social-account-linking/auth/',
     path: '/social-account-linking/auth/',
     getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/social-account-linking/auth/index.lazy').then(
-      (d) => d.Route,
-    ),
-  )
+  } as any)
 
-const SignUpSocialIndexLazyRoute = SignUpSocialIndexLazyImport.update({
+const SignUpSocialIndexRoute = SignUpSocialIndexImport.update({
   id: '/sign-up/social/',
   path: '/sign-up/social/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/sign-up/social/index.lazy').then((d) => d.Route),
-)
+} as any)
 
-const SignUpAuthIndexLazyRoute = SignUpAuthIndexLazyImport.update({
+const SignUpAuthIndexRoute = SignUpAuthIndexImport.update({
   id: '/sign-up/auth/',
   path: '/sign-up/auth/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/sign-up/auth/index.lazy').then((d) => d.Route),
-)
+} as any)
 
 const AuthGoogleCallbackIndexRoute = AuthGoogleCallbackIndexImport.update({
   id: '/auth/google/callback/',
@@ -96,42 +73,42 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+      preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
     '/login-error/': {
       id: '/login-error/'
       path: '/login-error'
       fullPath: '/login-error'
-      preLoaderRoute: typeof LoginErrorIndexLazyImport
+      preLoaderRoute: typeof LoginErrorIndexImport
       parentRoute: typeof rootRoute
     }
     '/sign-up/auth/': {
       id: '/sign-up/auth/'
       path: '/sign-up/auth'
       fullPath: '/sign-up/auth'
-      preLoaderRoute: typeof SignUpAuthIndexLazyImport
+      preLoaderRoute: typeof SignUpAuthIndexImport
       parentRoute: typeof rootRoute
     }
     '/sign-up/social/': {
       id: '/sign-up/social/'
       path: '/sign-up/social'
       fullPath: '/sign-up/social'
-      preLoaderRoute: typeof SignUpSocialIndexLazyImport
+      preLoaderRoute: typeof SignUpSocialIndexImport
       parentRoute: typeof rootRoute
     }
     '/social-account-linking/auth/': {
       id: '/social-account-linking/auth/'
       path: '/social-account-linking/auth'
       fullPath: '/social-account-linking/auth'
-      preLoaderRoute: typeof SocialAccountLinkingAuthIndexLazyImport
+      preLoaderRoute: typeof SocialAccountLinkingAuthIndexImport
       parentRoute: typeof rootRoute
     }
     '/social-account-linking/social/': {
       id: '/social-account-linking/social/'
       path: '/social-account-linking/social'
       fullPath: '/social-account-linking/social'
-      preLoaderRoute: typeof SocialAccountLinkingSocialIndexLazyImport
+      preLoaderRoute: typeof SocialAccountLinkingSocialIndexImport
       parentRoute: typeof rootRoute
     }
     '/auth/google/callback/': {
@@ -147,33 +124,33 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
-  '/login-error': typeof LoginErrorIndexLazyRoute
-  '/sign-up/auth': typeof SignUpAuthIndexLazyRoute
-  '/sign-up/social': typeof SignUpSocialIndexLazyRoute
-  '/social-account-linking/auth': typeof SocialAccountLinkingAuthIndexLazyRoute
-  '/social-account-linking/social': typeof SocialAccountLinkingSocialIndexLazyRoute
+  '/': typeof IndexRoute
+  '/login-error': typeof LoginErrorIndexRoute
+  '/sign-up/auth': typeof SignUpAuthIndexRoute
+  '/sign-up/social': typeof SignUpSocialIndexRoute
+  '/social-account-linking/auth': typeof SocialAccountLinkingAuthIndexRoute
+  '/social-account-linking/social': typeof SocialAccountLinkingSocialIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
-  '/login-error': typeof LoginErrorIndexLazyRoute
-  '/sign-up/auth': typeof SignUpAuthIndexLazyRoute
-  '/sign-up/social': typeof SignUpSocialIndexLazyRoute
-  '/social-account-linking/auth': typeof SocialAccountLinkingAuthIndexLazyRoute
-  '/social-account-linking/social': typeof SocialAccountLinkingSocialIndexLazyRoute
+  '/': typeof IndexRoute
+  '/login-error': typeof LoginErrorIndexRoute
+  '/sign-up/auth': typeof SignUpAuthIndexRoute
+  '/sign-up/social': typeof SignUpSocialIndexRoute
+  '/social-account-linking/auth': typeof SocialAccountLinkingAuthIndexRoute
+  '/social-account-linking/social': typeof SocialAccountLinkingSocialIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexLazyRoute
-  '/login-error/': typeof LoginErrorIndexLazyRoute
-  '/sign-up/auth/': typeof SignUpAuthIndexLazyRoute
-  '/sign-up/social/': typeof SignUpSocialIndexLazyRoute
-  '/social-account-linking/auth/': typeof SocialAccountLinkingAuthIndexLazyRoute
-  '/social-account-linking/social/': typeof SocialAccountLinkingSocialIndexLazyRoute
+  '/': typeof IndexRoute
+  '/login-error/': typeof LoginErrorIndexRoute
+  '/sign-up/auth/': typeof SignUpAuthIndexRoute
+  '/sign-up/social/': typeof SignUpSocialIndexRoute
+  '/social-account-linking/auth/': typeof SocialAccountLinkingAuthIndexRoute
+  '/social-account-linking/social/': typeof SocialAccountLinkingSocialIndexRoute
   '/auth/google/callback/': typeof AuthGoogleCallbackIndexRoute
 }
 
@@ -209,24 +186,22 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
-  LoginErrorIndexLazyRoute: typeof LoginErrorIndexLazyRoute
-  SignUpAuthIndexLazyRoute: typeof SignUpAuthIndexLazyRoute
-  SignUpSocialIndexLazyRoute: typeof SignUpSocialIndexLazyRoute
-  SocialAccountLinkingAuthIndexLazyRoute: typeof SocialAccountLinkingAuthIndexLazyRoute
-  SocialAccountLinkingSocialIndexLazyRoute: typeof SocialAccountLinkingSocialIndexLazyRoute
+  IndexRoute: typeof IndexRoute
+  LoginErrorIndexRoute: typeof LoginErrorIndexRoute
+  SignUpAuthIndexRoute: typeof SignUpAuthIndexRoute
+  SignUpSocialIndexRoute: typeof SignUpSocialIndexRoute
+  SocialAccountLinkingAuthIndexRoute: typeof SocialAccountLinkingAuthIndexRoute
+  SocialAccountLinkingSocialIndexRoute: typeof SocialAccountLinkingSocialIndexRoute
   AuthGoogleCallbackIndexRoute: typeof AuthGoogleCallbackIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexLazyRoute: IndexLazyRoute,
-  LoginErrorIndexLazyRoute: LoginErrorIndexLazyRoute,
-  SignUpAuthIndexLazyRoute: SignUpAuthIndexLazyRoute,
-  SignUpSocialIndexLazyRoute: SignUpSocialIndexLazyRoute,
-  SocialAccountLinkingAuthIndexLazyRoute:
-    SocialAccountLinkingAuthIndexLazyRoute,
-  SocialAccountLinkingSocialIndexLazyRoute:
-    SocialAccountLinkingSocialIndexLazyRoute,
+  IndexRoute: IndexRoute,
+  LoginErrorIndexRoute: LoginErrorIndexRoute,
+  SignUpAuthIndexRoute: SignUpAuthIndexRoute,
+  SignUpSocialIndexRoute: SignUpSocialIndexRoute,
+  SocialAccountLinkingAuthIndexRoute: SocialAccountLinkingAuthIndexRoute,
+  SocialAccountLinkingSocialIndexRoute: SocialAccountLinkingSocialIndexRoute,
   AuthGoogleCallbackIndexRoute: AuthGoogleCallbackIndexRoute,
 }
 
@@ -250,22 +225,22 @@ export const routeTree = rootRoute
       ]
     },
     "/": {
-      "filePath": "index.lazy.tsx"
+      "filePath": "index.tsx"
     },
     "/login-error/": {
-      "filePath": "login-error/index.lazy.tsx"
+      "filePath": "login-error/index.tsx"
     },
     "/sign-up/auth/": {
-      "filePath": "sign-up/auth/index.lazy.tsx"
+      "filePath": "sign-up/auth/index.tsx"
     },
     "/sign-up/social/": {
-      "filePath": "sign-up/social/index.lazy.tsx"
+      "filePath": "sign-up/social/index.tsx"
     },
     "/social-account-linking/auth/": {
-      "filePath": "social-account-linking/auth/index.lazy.tsx"
+      "filePath": "social-account-linking/auth/index.tsx"
     },
     "/social-account-linking/social/": {
-      "filePath": "social-account-linking/social/index.lazy.tsx"
+      "filePath": "social-account-linking/social/index.tsx"
     },
     "/auth/google/callback/": {
       "filePath": "auth/google/callback/index.tsx"

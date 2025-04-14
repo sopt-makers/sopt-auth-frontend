@@ -1,13 +1,13 @@
-import { css } from '@/styled-system/css'
-import Step from '@/src/components/common/Step'
-import AuthSection from '@/src/components/common/AuthSection'
-import GoBackButton from '@/src/components/common/GoBackButton'
+import { css } from '@/styled-system/css';
+import Step from '@/src/components/common/Step';
+import AuthSection from '@/src/components/common/AuthSection';
+import AuthFailHelper from '@/src/components/sign-up/AuthFailHelper';
+import GoBackButton from '@/src/components/common/GoBackButton';
+import { createFileRoute } from '@tanstack/react-router';
 
-import { createLazyFileRoute } from '@tanstack/react-router'
-
-export const Route = createLazyFileRoute('/social-account-linking/auth/')({
+export const Route = createFileRoute('/sign-up/auth/')({
   component: Index,
-})
+});
 
 function Index() {
   return (
@@ -18,7 +18,7 @@ function Index() {
       <Step.Root>
         <Step.Circle stepNumber={1} text="SOPT 회원인증" isActive />
         <Step.Connector />
-        <Step.Circle stepNumber={2} text="소셜 계정 재설정" />
+        <Step.Circle stepNumber={2} text="소셜 계정 연동" />
       </Step.Root>
       <h1 className={css({ ...mainTextStyles })}>SOPT 회원인증</h1>
       <p className={css({ ...textStyles, ...descriptionStyles })}>
@@ -26,12 +26,18 @@ function Index() {
         <br />
         SOPT 회원인증을 위해 전화번호를 입력해 주세요.
       </p>
-      <AuthSection nextURL="/social-account-linking/social" />
+      <AuthSection nextURL="/sign-up/social">
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdBxksqlkAHShYdQYxDIK1Mnsy45MbYMkEeGuCMpeXjn6C1NQ/viewform"
+          className={css({ ...linkStyles })}>
+          <AuthFailHelper />
+        </a>
+      </AuthSection>
     </main>
-  )
+  );
 }
 
-export default Index
+export default Index;
 
 const mainWrapperStyles = css.raw({
   position: 'relative',
@@ -42,7 +48,11 @@ const mainWrapperStyles = css.raw({
   '@media (max-width: 480px)': {
     height: '100dvh',
   },
-})
+});
+
+const linkStyles = css.raw({
+  marginTop: '4.1rem',
+});
 
 const mainTextStyles = css.raw({
   textAlign: 'center',
@@ -54,7 +64,7 @@ const mainTextStyles = css.raw({
     textStyle: 'title-3-24-sb',
     marginTop: '5.4rem',
   },
-})
+});
 
 const textStyles = css.raw({
   display: 'flex',
@@ -65,12 +75,12 @@ const textStyles = css.raw({
   '@media (max-width:480px)': {
     textStyle: 'label-4-12-sb',
   },
-})
+});
 
 const descriptionStyles = css.raw({
   textAlign: 'center',
   margin: '1.4rem auto 0 auto',
-})
+});
 
 const goBackButtonWrapperStyles = css.raw({
   position: 'absolute',
@@ -80,4 +90,4 @@ const goBackButtonWrapperStyles = css.raw({
   '@media (max-width:480px)': {
     visibility: 'visible',
   },
-})
+});

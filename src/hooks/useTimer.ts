@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-export const useTimer = (
-  isActive: boolean,
-  onResetTimer: () => void,
-  initialSeconds: number = 180
-) => {
+export const useTimer = (onResetTimer: () => void, initialSeconds: number = 180) => {
+  const [isTimerActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(initialSeconds);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+
+  const startTimer = () => {
+    setIsActive(true);
+  };
 
   const clearTimer = () => {
     if (timerRef.current) {
@@ -20,7 +21,7 @@ export const useTimer = (
   };
 
   useEffect(() => {
-    if (isActive) {
+    if (isTimerActive) {
       if (timerRef.current) {
         setTimeLeft(initialSeconds);
       }
@@ -29,6 +30,7 @@ export const useTimer = (
         setTimeLeft((prev) => {
           if (prev <= 1) {
             onResetTimer();
+            setIsActive(false);
             clearTimer();
             return 0;
           }
@@ -42,7 +44,7 @@ export const useTimer = (
     return () => {
       clearTimer();
     };
-  }, [isActive, onResetTimer, initialSeconds]);
+  }, [isTimerActive, onResetTimer, initialSeconds]);
 
-  return { timeLeft, resetTime };
+  return { timeLeft, reset: resetTime, start: startTimer, isTimerActive };
 };

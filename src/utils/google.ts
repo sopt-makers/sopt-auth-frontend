@@ -1,6 +1,10 @@
 import { generateNonce } from "./nonce";
 
-export const getGoogleAuthUrl = (): string => {
+interface GoogleAuthUrlProps {
+  state: "login" | "update" | "signup";
+}
+
+  export const getGoogleAuthUrl = ({state}: GoogleAuthUrlProps): string => {
   const { VITE_GOOGLE_CLIENT_ID, VITE_GOOGLE_REDIRECT_URI } = import.meta.env;
 
   if (!VITE_GOOGLE_CLIENT_ID || !VITE_GOOGLE_REDIRECT_URI) {
@@ -18,6 +22,7 @@ export const getGoogleAuthUrl = (): string => {
     response_type: "id_token",
     scope: "openid email profile",
     nonce,
+    state: state,
   });
 
   return `${baseUrl}?${params.toString()}`;
