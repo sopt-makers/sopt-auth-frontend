@@ -18,6 +18,7 @@ import { Route as SocialAccountLinkingAuthIndexImport } from './routes/social-ac
 import { Route as SignUpSocialIndexImport } from './routes/sign-up/social/index'
 import { Route as SignUpAuthIndexImport } from './routes/sign-up/auth/index'
 import { Route as AuthGoogleCallbackIndexImport } from './routes/auth/google/callback/index'
+import { Route as AuthAppleCallbackIndexImport } from './routes/auth/apple/callback/index'
 
 // Create/Update Routes
 
@@ -62,6 +63,12 @@ const SignUpAuthIndexRoute = SignUpAuthIndexImport.update({
 const AuthGoogleCallbackIndexRoute = AuthGoogleCallbackIndexImport.update({
   id: '/auth/google/callback/',
   path: '/auth/google/callback/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthAppleCallbackIndexRoute = AuthAppleCallbackIndexImport.update({
+  id: '/auth/apple/callback/',
+  path: '/auth/apple/callback/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -111,6 +118,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SocialAccountLinkingSocialIndexImport
       parentRoute: typeof rootRoute
     }
+    '/auth/apple/callback/': {
+      id: '/auth/apple/callback/'
+      path: '/auth/apple/callback'
+      fullPath: '/auth/apple/callback'
+      preLoaderRoute: typeof AuthAppleCallbackIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/auth/google/callback/': {
       id: '/auth/google/callback/'
       path: '/auth/google/callback'
@@ -130,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/sign-up/social': typeof SignUpSocialIndexRoute
   '/social-account-linking/auth': typeof SocialAccountLinkingAuthIndexRoute
   '/social-account-linking/social': typeof SocialAccountLinkingSocialIndexRoute
+  '/auth/apple/callback': typeof AuthAppleCallbackIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackIndexRoute
 }
 
@@ -140,6 +155,7 @@ export interface FileRoutesByTo {
   '/sign-up/social': typeof SignUpSocialIndexRoute
   '/social-account-linking/auth': typeof SocialAccountLinkingAuthIndexRoute
   '/social-account-linking/social': typeof SocialAccountLinkingSocialIndexRoute
+  '/auth/apple/callback': typeof AuthAppleCallbackIndexRoute
   '/auth/google/callback': typeof AuthGoogleCallbackIndexRoute
 }
 
@@ -151,6 +167,7 @@ export interface FileRoutesById {
   '/sign-up/social/': typeof SignUpSocialIndexRoute
   '/social-account-linking/auth/': typeof SocialAccountLinkingAuthIndexRoute
   '/social-account-linking/social/': typeof SocialAccountLinkingSocialIndexRoute
+  '/auth/apple/callback/': typeof AuthAppleCallbackIndexRoute
   '/auth/google/callback/': typeof AuthGoogleCallbackIndexRoute
 }
 
@@ -163,6 +180,7 @@ export interface FileRouteTypes {
     | '/sign-up/social'
     | '/social-account-linking/auth'
     | '/social-account-linking/social'
+    | '/auth/apple/callback'
     | '/auth/google/callback'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -172,6 +190,7 @@ export interface FileRouteTypes {
     | '/sign-up/social'
     | '/social-account-linking/auth'
     | '/social-account-linking/social'
+    | '/auth/apple/callback'
     | '/auth/google/callback'
   id:
     | '__root__'
@@ -181,6 +200,7 @@ export interface FileRouteTypes {
     | '/sign-up/social/'
     | '/social-account-linking/auth/'
     | '/social-account-linking/social/'
+    | '/auth/apple/callback/'
     | '/auth/google/callback/'
   fileRoutesById: FileRoutesById
 }
@@ -192,6 +212,7 @@ export interface RootRouteChildren {
   SignUpSocialIndexRoute: typeof SignUpSocialIndexRoute
   SocialAccountLinkingAuthIndexRoute: typeof SocialAccountLinkingAuthIndexRoute
   SocialAccountLinkingSocialIndexRoute: typeof SocialAccountLinkingSocialIndexRoute
+  AuthAppleCallbackIndexRoute: typeof AuthAppleCallbackIndexRoute
   AuthGoogleCallbackIndexRoute: typeof AuthGoogleCallbackIndexRoute
 }
 
@@ -202,6 +223,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignUpSocialIndexRoute: SignUpSocialIndexRoute,
   SocialAccountLinkingAuthIndexRoute: SocialAccountLinkingAuthIndexRoute,
   SocialAccountLinkingSocialIndexRoute: SocialAccountLinkingSocialIndexRoute,
+  AuthAppleCallbackIndexRoute: AuthAppleCallbackIndexRoute,
   AuthGoogleCallbackIndexRoute: AuthGoogleCallbackIndexRoute,
 }
 
@@ -221,6 +243,7 @@ export const routeTree = rootRoute
         "/sign-up/social/",
         "/social-account-linking/auth/",
         "/social-account-linking/social/",
+        "/auth/apple/callback/",
         "/auth/google/callback/"
       ]
     },
@@ -241,6 +264,9 @@ export const routeTree = rootRoute
     },
     "/social-account-linking/social/": {
       "filePath": "social-account-linking/social/index.tsx"
+    },
+    "/auth/apple/callback/": {
+      "filePath": "auth/apple/callback/index.tsx"
     },
     "/auth/google/callback/": {
       "filePath": "auth/google/callback/index.tsx"
