@@ -18,7 +18,7 @@ function LoginSection() {
 
   useEffect(() => {
     window.AppleID.auth.init({
-      clientId: '95YWTT5L8K.com.sopt-stamp-iOS.alpha',
+      clientId: 'com.auth-frontend.sopt',
       scope: 'name email',
       redirectURI: 'https://sopt-auth-frontend.pages.dev/auth/apple/callback',
       state: 'login',
