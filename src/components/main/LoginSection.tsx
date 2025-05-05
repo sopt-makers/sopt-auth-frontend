@@ -1,31 +1,18 @@
 'use client';
 
 import { css } from '@/styled-system/css';
-
 import LoginButton from './LoginButton';
 import { IconChevronRight } from '@sopt-makers/icons';
 import LastLoggedInBanner from './LastLoggedInBanner';
 import CannotLoginModal from '@/src/components/common/CannotLoginModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { getGoogleAuthUrl } from '@/src/utils/google';
-import { generateNonce } from '@/src/utils/nonce';
-import { useLogin } from '@/src/hooks/useLogin';
+import { useAuthWithApple } from '@/src/hooks/useAuthWithApple';
 
 function LoginSection() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { handleLogin } = useLogin();
-
-  useEffect(() => {
-    window.AppleID.auth.init({
-      clientId: 'com.auth-frontend.sopt',
-      scope: 'name email',
-      redirectURI: 'https://sopt-auth-frontend.pages.dev/auth/apple/callback',
-      state: 'login',
-      nonce: generateNonce(30),
-      usePopup: true,
-    });
-  }, []);
+  const { handleSignIn } = useAuthWithApple();
 
   const handleClickCannotLoginButton = () => {
     setIsModalOpen(true);
@@ -39,22 +26,8 @@ function LoginSection() {
     location.href = getGoogleAuthUrl({ state: 'login' });
   };
 
-  const handleAppleLogin = async () => {
-    const nonce = generateNonce(30);
-    sessionStorage.setItem('nonce', nonce);
-
-    try {
-      const response = await window.AppleID.auth.signIn();
-      console.log(response);
-      if (response.authorization && response.authorization.id_token && response.authorization.state === 'login') {
-        handleLogin({
-          token: response.authorization.id_token,
-          authPlatform: 'APPLE',
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
+  const handleAppleLogin = () => {
+    handleSignIn();
   };
 
   return (
