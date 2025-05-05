@@ -37,9 +37,6 @@ function Index() {
     await handleSignUp({
       name: name,
       phone: phone,
-    }).then(() => {
-      sessionStorage.removeItem('name');
-      sessionStorage.removeItem('phone');
     });
   };
 

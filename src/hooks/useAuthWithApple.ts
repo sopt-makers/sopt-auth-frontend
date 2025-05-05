@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-router';
 import { generateNonce } from '../utils/nonce';
 import { useLogin } from './useLogin';
 import { useSignUp } from './useSignUp';
@@ -24,7 +23,6 @@ type SignUpRequest = {
 export const useAuthWithApple = () => {
   const { handleLogin: login } = useLogin();
   const { handleSignUp: signUp } = useSignUp();
-  const navigate = useNavigate();
 
   const signInWithApple = async (state: AuthState) => {
     const nonce = generateNonce(30);
@@ -46,30 +44,28 @@ export const useAuthWithApple = () => {
   };
 
   const handleSignIn = async () => {
-    await signInWithApple({
+    const token = await signInWithApple({
       type: 'login',
-    }).then(async (res) => {
-      if (res) {
-        await login({
-          token: res,
-          authPlatform: 'APPLE',
-        });
-      }
     });
+
+    if (token) {
+      await login({
+        token,
+        authPlatform: 'APPLE',
+      });
+    }
   };
 
   const handleSignUp = async (req: Pick<SignUpRequest, 'name' | 'phone'>) => {
-    await signInWithApple({ type: 'signup' }).then(async (res) => {
-      if (res) {
-        await signUp({
-          ...req,
-          token: res,
-          authPlatform: 'APPLE',
-        });
+    const token = await signInWithApple({ type: 'signup' });
 
-        navigate({ to: '/', replace: true });
-      }
-    });
+    if (token) {
+      await signUp({
+        ...req,
+        token,
+        authPlatform: 'APPLE',
+      });
+    }
   };
 
   return { handleSignIn, handleSignUp };
