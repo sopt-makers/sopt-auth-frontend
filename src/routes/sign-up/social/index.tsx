@@ -4,6 +4,7 @@ import LoginButton from '@/src/components/main/LoginButton';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { getGoogleAuthUrl } from '@/src/utils/google';
 import { isAuthenticated } from '@/src/utils/auth';
+import { useAuthWithApple } from '@/src/hooks/useAuthWithApple';
 
 export const Route = createFileRoute('/sign-up/social/')({
   component: Index,
@@ -18,9 +19,28 @@ export const Route = createFileRoute('/sign-up/social/')({
 
 function Index() {
   const name = sessionStorage.getItem('name');
+  const { handleSignUp } = useAuthWithApple();
 
   const handleGoogleLogin = () => {
     location.href = getGoogleAuthUrl({ state: 'signup' });
+  };
+
+  const handleAppleLogin = async () => {
+    const name = sessionStorage.getItem('name');
+    const phone = sessionStorage.getItem('phone');
+
+    if (!name || !phone) {
+      alert('이름과 전화번호를 입력해주세요');
+      return;
+    }
+
+    await handleSignUp({
+      name: name,
+      phone: phone,
+    }).then(() => {
+      sessionStorage.removeItem('name');
+      sessionStorage.removeItem('phone');
+    });
   };
 
   return (
@@ -42,7 +62,11 @@ function Index() {
           buttonText="Google로 로그인"
           buttonIcon={<img src="/google.svg" alt="구글 로고" />}
         />
-        <LoginButton buttonText="Apple로 로그인" buttonIcon={<img src="/apple.svg" alt="애플 로고" />} />
+        <LoginButton
+          onClick={handleAppleLogin}
+          buttonText="Apple로 로그인"
+          buttonIcon={<img src="/apple.svg" alt="애플 로고" />}
+        />
       </section>
     </main>
   );
