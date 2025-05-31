@@ -10,7 +10,10 @@ export const useLogin = () => {
       localStorage.setItem('serviceAccessToken', response.data.accessToken);
       // NOTE: 기존 pg-lastRegister를 sopt-lastRegister로 변경
       localStorage.setItem('sopt-lastRegister', authPlatform === 'GOOGLE' ? 'google' : 'apple');
-      window.location.href = 'https://playground.sopt.org/intro';
+
+      // NOTE: 서버 테스트용 복사 프롬프트
+      prompt('서버테스트용 액세스 토큰 추출 (Ctrl+C로 복사하세요):', response.data.accessToken);
+      // window.location.href = 'https://playground.sopt.org/intro';
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);

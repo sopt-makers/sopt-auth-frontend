@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { validateNonce } from '@/src/utils/nonce';
 import { useSignUp } from '@/src/hooks/useSignUp';
 import { useUpdateSocialAccount } from '@/src/hooks/useUpdateSocialAccount';
+import { Button } from '@sopt-makers/ui';
 export const Route = createFileRoute('/auth/google/callback/')({
   component: Index,
 });
@@ -67,7 +68,8 @@ function Index() {
     }
   }, []);
 
-  return null;
+  // NOTE: 서버 테스트용 임시 버튼
+  return <Button onClick={() => navigate({ to: '/' })}>홈으로 돌아가기</Button>;
 }
 
 export default Index;
