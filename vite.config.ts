@@ -12,6 +12,5 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'accounts',
   },
-
   base: mode === 'production' ? '/accounts/' : '/',
 }));
