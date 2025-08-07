@@ -1,9 +1,11 @@
 import { generateNonce } from './nonce';
 
+const { VITE_APPLE_REDIRECT_URI } = import.meta.env;
+
 window.AppleID.auth.init({
   clientId: 'com.auth-frontend.sopt',
   scope: 'name email',
-  redirectURI: 'https://sopt-auth-frontend.pages.dev/auth/apple/callback',
+  redirectURI: VITE_APPLE_REDIRECT_URI,
   nonce: generateNonce(30),
   usePopup: true,
 });
