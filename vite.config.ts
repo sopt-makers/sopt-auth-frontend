@@ -9,5 +9,8 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, './') }],
   },
+  build: {
+    outDir: 'accounts',
+  },
   base: mode === 'production' ? '/accounts' : '/',
 }));

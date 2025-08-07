@@ -20,6 +20,7 @@
 # production
 /build
 /dist
+/accounts
 
 # misc
 .DS_Store
