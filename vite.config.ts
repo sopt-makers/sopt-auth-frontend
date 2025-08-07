@@ -4,7 +4,7 @@ import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import path from 'path';
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   plugins: [TanStackRouterVite(), react()],
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, './') }],
@@ -12,5 +12,5 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'accounts',
   },
-  base: mode === 'production' ? '/accounts/' : '/',
+  base: '/',
 }));
