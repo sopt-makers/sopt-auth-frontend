@@ -1,3 +1,0 @@
-/accounts/assets/* /accounts/assets/:splat 200
-
-/accounts/* /accounts/index.html 200 
