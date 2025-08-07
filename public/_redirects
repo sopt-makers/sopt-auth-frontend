@@ -1,0 +1,5 @@
+# Static assets should be served directly (higher priority)
+/accounts/assets/* /accounts/assets/:splat 200
+
+# SPA routing - 모든 HTML 페이지 요청을 index.html로 프록시
+/accounts/* /accounts/index.html 200 
