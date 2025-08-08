@@ -1,6 +1,7 @@
 import ReLoginSection from '@/src/components/login-error/ReLoginSection';
 import { css } from '@/styled-system/css';
 import { createFileRoute } from '@tanstack/react-router';
+import loginErrorIcon from '@/src/assets/login_error.svg';
 
 export const Route = createFileRoute('/login-error/')({
   component: Index,
@@ -11,7 +12,7 @@ function Index() {
     <div className={css({ ...pageWrapperStyles })}>
       <main className={css({ ...mainWrapperStyles })}>
         <div className={css({ ...mainImgTextWrapperStyles })}>
-          <img src="/login_error.svg" alt="로그인 에러 이미지" className={css({ ...errorImgStyles })} />
+          <img src={loginErrorIcon} alt="로그인 에러 이미지" className={css({ ...errorImgStyles })} />
           <div className={css({ ...mainTextStyles })}>
             <h1 className={css({ ...mainTitleStyles })}>
               앗! <span className={css({ ...emphasizeStyles })}>회원 정보</span>

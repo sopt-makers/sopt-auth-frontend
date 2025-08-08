@@ -9,6 +9,8 @@ import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { getGoogleAuthUrl } from '@/src/utils/google';
 import { useAuthWithApple } from '@/src/hooks/useAuthWithApple';
+import appleLogo from '@/src/assets/apple.svg';
+import googleLogo from '@/src/assets/google.svg';
 
 function LoginSection() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -39,12 +41,12 @@ function LoginSection() {
           <LoginButton
             onClick={handleGoogleLogin}
             buttonText="Google로 로그인"
-            buttonIcon={<img src="/google.svg" alt="구글 로고" />}
+            buttonIcon={<img src={googleLogo} alt="구글 로고" />}
           />
           <LoginButton
             onClick={handleAppleLogin}
             buttonText="Apple로 로그인"
-            buttonIcon={<img src="/apple.svg" alt="애플 로고" />}
+            buttonIcon={<img src={appleLogo} alt="애플 로고" />}
           />
         </section>
         <button className={css({ ...cannotLoginButtonStyles })} onClick={handleClickCannotLoginButton}>

@@ -1,16 +1,15 @@
-import { css } from "@/styled-system/css";
-import { IconChevronRight } from "@sopt-makers/icons";
+import { css } from '@/styled-system/css';
+import { IconChevronRight } from '@sopt-makers/icons';
+import helperCircleIcon from '@/src/assets/helper_circle.svg';
 
 function AuthFailHelper() {
   return (
     <div className={css({ ...helperWrapperStyles })}>
-      <img src="/helper_circle.svg" className={css({ ...helperIconStyles })} />
+      <img src={helperCircleIcon} className={css({ ...helperIconStyles })} />
 
       <span>
         <button className={css({ ...helperSpanStyles })}>
-          <h3 className={css({ ...helperTitleStyles })}>
-            SOPT 회원 인증에 실패하셨나요?
-          </h3>
+          <h3 className={css({ ...helperTitleStyles })}>SOPT 회원 인증에 실패하셨나요?</h3>
           <IconChevronRight className={css({ ...chevronRightStyles })} />
         </button>
         <p className={css({ ...helperTextStyles })}>
@@ -26,42 +25,42 @@ function AuthFailHelper() {
 export default AuthFailHelper;
 
 const helperWrapperStyles = css.raw({
-  display: "flex",
-  columnGap: "1rem",
-  border: "1px solid",
-  borderColor: "blueAlpha.600",
-  padding: "1.4rem 1.8rem",
-  borderRadius: "18px",
-  backgroundColor: "blueAlpha.100",
+  display: 'flex',
+  columnGap: '1rem',
+  border: '1px solid',
+  borderColor: 'blueAlpha.600',
+  padding: '1.4rem 1.8rem',
+  borderRadius: '18px',
+  backgroundColor: 'blueAlpha.100',
 
-  "&:hover": {
-    backgroundColor: "blueAlpha.200",
+  '&:hover': {
+    backgroundColor: 'blueAlpha.200',
   },
 });
 
 const helperIconStyles = css.raw({
-  width: "2.0rem",
-  height: "2.0rem",
+  width: '2.0rem',
+  height: '2.0rem',
 });
 
 const helperSpanStyles = css.raw({
-  display: "flex",
-  cursor: "pointer",
+  display: 'flex',
+  cursor: 'pointer',
 });
 
 const helperTitleStyles = css.raw({
-  textStyle: "label-3-14-sb",
-  color: "gray.30",
+  textStyle: 'label-3-14-sb',
+  color: 'gray.30',
 });
 
 const helperTextStyles = css.raw({
-  marginTop: "1.4rem",
-  textStyle: "label-4-12-sb",
-  color: "gray.200",
+  marginTop: '1.4rem',
+  textStyle: 'label-4-12-sb',
+  color: 'gray.200',
 });
 
 const chevronRightStyles = css.raw({
-  color: "white",
-  width: "1.6rem",
-  height: "1.6rem",
+  color: 'white',
+  width: '1.6rem',
+  height: '1.6rem',
 });

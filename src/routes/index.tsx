@@ -2,6 +2,8 @@ import { css } from '@/styled-system/css';
 import LoginSection from '@/src/components/main/LoginSection';
 
 import { createFileRoute } from '@tanstack/react-router';
+import soptLogo from '@/src/assets/sopt.png';
+import makersLogo from '@/src/assets/makers.png';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -43,7 +45,7 @@ export default function Index() {
               className={css({
                 ...soptImgStyles,
               })}
-              src="/sopt.png"
+              src={soptLogo}
               alt="sopt 로고"
             />
           </a>
@@ -52,7 +54,7 @@ export default function Index() {
               className={css({
                 ...makersImgStyles,
               })}
-              src="/makers.png"
+              src={makersLogo}
               alt="makers 로고"
             />
           </a>
