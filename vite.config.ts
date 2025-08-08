@@ -9,8 +9,5 @@ export default defineConfig(() => ({
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, './') }],
   },
-  build: {
-    outDir: 'accounts',
-  },
   base: '/',
 }));
