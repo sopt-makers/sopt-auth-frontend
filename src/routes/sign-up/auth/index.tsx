@@ -40,10 +40,10 @@ function Index() {
 export default Index;
 
 const mainWrapperStyles = css.raw({
-  position: 'relative',
   display: 'flex',
   height: '100vh',
   flexDirection: 'column',
+  width: 'calc(100% - 3.2rem)',
 
   '@media (max-width: 480px)': {
     height: '100dvh',

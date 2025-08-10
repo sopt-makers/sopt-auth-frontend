@@ -146,11 +146,11 @@ const phoneWrapperStyles = css.raw({
 });
 
 const phoneInputStyles = css.raw({
-  flex: 1,
+  width: '70%',
 });
 
 const authNumberInputStyles = css.raw({
-  width: '42rem',
+  width: '100%',
   height: '48px',
 
   '@media (max-width: 480px)': {
@@ -190,7 +190,7 @@ const completeButtonStyles = css.raw({
 });
 
 const sendAuthNumberButtonStyles = css.raw({
-  width: '11.6rem',
+  width: '30%',
 
   '@media (max-width: 480px)': {
     width: '11rem',
