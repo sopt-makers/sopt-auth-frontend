@@ -20,6 +20,7 @@ export const postUpdateSocialAccount = async ({ phone, token, authPlatform }: Po
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ phone, authPlatform, token }),
+    credentials: 'include',
   });
 
   const responseData = (await response.json()) as PostUpdateSocialAccountResponse;

@@ -1,11 +1,11 @@
-import { client } from "./client";
-import { API_ENDPOINT } from "./constants/apiUrl";
+import { client } from './client';
+import { API_ENDPOINT } from './constants/apiUrl';
 
 export interface PostSignUpRequest {
   name: string;
   phone: string;
   token: string;
-  authPlatform: "GOOGLE" | "APPLE";
+  authPlatform: 'GOOGLE' | 'APPLE';
 }
 
 export interface PostSignUpResponse {
@@ -14,18 +14,14 @@ export interface PostSignUpResponse {
   data: null;
 }
 
-export const postSignUp = async ({
-  name,
-  phone,
-  token,
-  authPlatform,
-}: PostSignUpRequest) => {
+export const postSignUp = async ({ name, phone, token, authPlatform }: PostSignUpRequest) => {
   const response = await client(API_ENDPOINT.SIGN_UP, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ name, phone, token, authPlatform }),
+    credentials: 'include',
   });
 
   const responseData = (await response.json()) as PostSignUpResponse;
