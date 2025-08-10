@@ -43,6 +43,7 @@ const mainWrapperStyles = css.raw({
   display: 'flex',
   height: '100vh',
   flexDirection: 'column',
+  maxWidth: '42rem',
   width: 'calc(100% - 3.2rem)',
 
   '@media (max-width: 480px)': {
