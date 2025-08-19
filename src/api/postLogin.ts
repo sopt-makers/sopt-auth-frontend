@@ -11,6 +11,7 @@ interface PostLoginResponse {
   message: string;
   data: {
     accessToken: string;
+    isFirstLogin: boolean;
   };
 }
 
