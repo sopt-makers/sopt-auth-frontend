@@ -5,15 +5,15 @@ export const formatTime = (time: number): string => {
 };
 
 export const formatPhoneNumber = (phone: string): string => {
-  const digits = phone.replace(/\D/g, '').slice(0, 11); // 최대 11자리
+  const digits = phone.replace(/\D/g, '').slice(0, 11);
   const len = digits.length;
 
   if (len <= 3) {
     return digits;
   } else if (len <= 7) {
-    return digits.replace(/(\d{3})(\d{1,4})/, '$1-$2'); // 010-1234
+    return digits.replace(/(\d{3})(\d{1,4})/, '$1-$2');
   } else {
-    return digits.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3'); // 010-1234-5678
+    return digits.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3');
   }
 };
 
