@@ -29,8 +29,7 @@ export const useLogin = () => {
       window.location.href = VITE_SUCCESS_CALLBACK;
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message);
-        navigate({ to: '/', replace: true });
+        navigate({ to: '/login-error', replace: true });
       }
     }
   };
