@@ -2,6 +2,7 @@ import ReLoginSection from '@/src/components/login-error/ReLoginSection';
 import { css } from '@/styled-system/css';
 import { createFileRoute } from '@tanstack/react-router';
 import loginErrorIcon from '@/src/assets/login_error.svg';
+import makersLogo from '@/src/assets/makers.png';
 
 export const Route = createFileRoute('/login-error/')({
   component: Index,
@@ -39,7 +40,7 @@ function Index() {
             className={css({
               ...makersImgStyles,
             })}
-            src="/makers.png"
+            src={makersLogo}
             alt="makers 로고"
           />
         </a>

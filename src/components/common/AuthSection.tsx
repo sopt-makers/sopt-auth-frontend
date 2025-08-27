@@ -1,11 +1,13 @@
 import { ReactNode, ChangeEvent, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { Button, TextField } from '@sopt-makers/ui';
+import { Button, TextField, useToast } from '@sopt-makers/ui';
 import { css, cx } from '@/styled-system/css';
 import { useTimer } from '@/src/hooks/useTimer';
 import { formatTime } from '@/src/utils/formatter';
 import { postAuthPhone } from '@/src/api/postAuthPhone';
 import { postVerifyPhone } from '@/src/api/postVerifyPhone';
+import { isValidPhone } from '@/src/utils/validator';
+import { formatPhoneNumber, extractPhoneDigits } from '@/src/utils/formatter';
 
 interface AuthSectionProps {
   children?: ReactNode;
@@ -17,10 +19,12 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   const [errorMessage, setErrorMessage] = useState({ authNumber: '', phoneNumber: '' });
   const [authButtonText, setAuthButtonText] = useState<'전송하기' | '재전송하기'>('전송하기');
 
+  const { open } = useToast();
+
   const navigate = useNavigate();
 
   const handleChangedPhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    setNumberInput((prev) => ({ ...prev, phoneNumber: e.target.value }));
+    setNumberInput((prev) => ({ ...prev, phoneNumber: formatPhoneNumber(e.target.value) }));
   };
 
   const handleChangeAuthNumber = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +32,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   };
 
   const timerCallback = () => {
+    setNumberInput((prev) => ({ ...prev, authNumber: '' }));
     setErrorMessage((prev) => ({ ...prev, authNumber: '3분이 초과되었어요. 인증번호를 다시 요청해주세요.' }));
   };
 
@@ -38,7 +43,14 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
       setErrorMessage((prev) => ({ ...prev, phoneNumber: '전화번호를 확인해주세요.' }));
     } else {
       try {
-        await postAuthPhone(numberInput.phoneNumber);
+        await postAuthPhone({
+          phone: extractPhoneDigits(numberInput.phoneNumber),
+          type: nextURL === '/sign-up/social' ? 'REGISTER' : 'CHANGE_SOCIAL_PLATFORM',
+        });
+        open({
+          icon: 'success',
+          content: '인증번호가 전송되었어요.',
+        });
 
         setAuthButtonText('재전송하기');
         setNumberInput((prev) => ({ ...prev, authNumber: '' }));
@@ -53,9 +65,15 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
     }
   };
 
+  console.log(extractPhoneDigits(numberInput.phoneNumber));
+
   const handleAuthComplete = async () => {
     try {
-      const response = await postVerifyPhone(numberInput.phoneNumber, numberInput.authNumber);
+      const response = await postVerifyPhone({
+        phone: extractPhoneDigits(numberInput.phoneNumber),
+        code: numberInput.authNumber,
+        type: nextURL === '/sign-up/social' ? 'REGISTER' : 'CHANGE_SOCIAL_PLATFORM',
+      });
       const { name, phone } = response.data;
 
       sessionStorage.setItem('name', name);
@@ -78,12 +96,16 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
           <TextField
             value={numberInput.phoneNumber}
             onChange={handleChangedPhoneNumber}
-            placeholder="010XXXXXXXX"
+            maxLength={13}
+            placeholder="010-XXXX-XXXX"
             isError={errorMessage.phoneNumber.length > 0}
             errorMessage={errorMessage.phoneNumber}
             className={css({ ...phoneInputStyles })}
           />
-          <Button className={css({ ...sendAuthNumberButtonStyles })} onClick={handleSendAuthNumber}>
+          <Button
+            disabled={!isValidPhone(numberInput.phoneNumber) || isTimerActive}
+            className={css({ ...sendAuthNumberButtonStyles })}
+            onClick={handleSendAuthNumber}>
             {authButtonText}
           </Button>
         </div>
@@ -91,7 +113,9 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
           <TextField
             value={numberInput.authNumber}
             onChange={handleChangeAuthNumber}
+            maxLength={6}
             placeholder="인증번호를 입력해주세요."
+            disabled={!isTimerActive}
             isError={errorMessage.authNumber.length > 0}
             errorMessage={errorMessage.authNumber}
             className={css({ ...authNumberInputStyles })}

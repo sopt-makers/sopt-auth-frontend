@@ -4,16 +4,19 @@ import { css } from '@/styled-system/css';
 import './index.css';
 import '@sopt-makers/ui/dist/index.css';
 import '@/src/utils/apple';
+import { ToastProvider } from '@sopt-makers/ui';
 
 export const Route = createRootRoute({
   component: () => (
     <>
-      <div
-        className={css({
-          ...rootLayoutStyle,
-        })}>
-        <Outlet />
-      </div>
+      <ToastProvider>
+        <div
+          className={css({
+            ...rootLayoutStyle,
+          })}>
+          <Outlet />
+        </div>
+      </ToastProvider>
       <TanStackRouterDevtools />
     </>
   ),

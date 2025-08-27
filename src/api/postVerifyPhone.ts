@@ -1,3 +1,9 @@
+interface PostVerifyPhoneRequest {
+  phone: string;
+  code: string;
+  type?: 'REGISTER' | 'CHANGE_SOCIAL_PLATFORM';
+}
+
 interface PostVerifyPhoneResponse {
   success: boolean;
   message: string;
@@ -7,7 +13,7 @@ interface PostVerifyPhoneResponse {
   };
 }
 
-export const postVerifyPhone = async (phone: string, code: string) => {
+export const postVerifyPhone = async ({ phone, code, type = 'REGISTER' }: PostVerifyPhoneRequest) => {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/auth/verify/phone`, {
     method: 'POST',
     headers: {
@@ -17,7 +23,7 @@ export const postVerifyPhone = async (phone: string, code: string) => {
       name: 'Mock-Success-Register',
       phone,
       code,
-      type: 'REGISTER',
+      type,
     }),
   });
 
