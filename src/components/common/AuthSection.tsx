@@ -28,6 +28,7 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   };
 
   const handleChangeAuthNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage((prev) => ({ ...prev, authNumber: '' }));
     setNumberInput((prev) => ({ ...prev, authNumber: e.target.value }));
   };
 
