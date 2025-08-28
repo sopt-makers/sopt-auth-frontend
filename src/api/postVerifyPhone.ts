@@ -1,7 +1,7 @@
 interface PostVerifyPhoneRequest {
   phone: string;
   code: string;
-  type?: 'REGISTER' | 'CHANGE_SOCIAL_PLATFORM';
+  type?: 'REGISTER' | 'CHANGE_SOCIAL_PLATFORM' | 'SEARCH_SOCIAL_PLATFORM';
 }
 
 interface PostVerifyPhoneResponse {
