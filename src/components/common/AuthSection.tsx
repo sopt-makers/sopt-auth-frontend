@@ -8,11 +8,18 @@ import { postAuthPhone } from '@/src/api/postAuthPhone';
 import { postVerifyPhone } from '@/src/api/postVerifyPhone';
 import { isValidPhone } from '@/src/utils/validator';
 import { formatPhoneNumber, extractPhoneDigits } from '@/src/utils/formatter';
+import { getSocialAccountsPlatform } from '@/src/api/getSocialAccountsPlatfrom';
 
 interface AuthSectionProps {
   children?: ReactNode;
-  nextURL: '/sign-up/social' | '/social-account-linking/social';
+  nextURL: '/sign-up/social' | '/social-account-linking/social' | '/';
 }
+
+const authURLMap = {
+  '/sign-up/social': 'REGISTER',
+  '/social-account-linking/social': 'CHANGE_SOCIAL_PLATFORM',
+  '/': 'SEARCH_SOCIAL_PLATFORM',
+} as const;
 
 function AuthSection({ children, nextURL }: AuthSectionProps) {
   const [numberInput, setNumberInput] = useState({ phoneNumber: '', authNumber: '' });
@@ -46,8 +53,9 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
       try {
         await postAuthPhone({
           phone: extractPhoneDigits(numberInput.phoneNumber),
-          type: nextURL === '/sign-up/social' ? 'REGISTER' : 'CHANGE_SOCIAL_PLATFORM',
+          type: authURLMap[nextURL],
         });
+
         open({
           icon: 'success',
           content: '인증번호가 전송되었어요.',
@@ -66,19 +74,22 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
     }
   };
 
-  console.log(extractPhoneDigits(numberInput.phoneNumber));
-
   const handleAuthComplete = async () => {
     try {
       const response = await postVerifyPhone({
         phone: extractPhoneDigits(numberInput.phoneNumber),
         code: numberInput.authNumber,
-        type: nextURL === '/sign-up/social' ? 'REGISTER' : 'CHANGE_SOCIAL_PLATFORM',
+        type: authURLMap[nextURL],
       });
       const { name, phone } = response.data;
 
       sessionStorage.setItem('name', name);
       sessionStorage.setItem('phone', phone);
+
+      if (nextURL === '/') {
+        const socialAccountsPlatformResponse = await getSocialAccountsPlatform({ name, phone });
+        localStorage.setItem('sopt-lastRegister', socialAccountsPlatformResponse.data.platform);
+      }
 
       setErrorMessage((prev) => ({ ...prev, authNumber: '' }));
       navigate({ to: nextURL });
