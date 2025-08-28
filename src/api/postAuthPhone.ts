@@ -1,6 +1,6 @@
 interface PostAuthPhoneRequest {
   phone: string;
-  type?: 'REGISTER' | 'CHANGE_SOCIAL_PLATFORM';
+  type?: 'REGISTER' | 'CHANGE_SOCIAL_PLATFORM' | 'SEARCH_SOCIAL_PLATFORM';
 }
 
 interface PostAuthPhoneResponse {
