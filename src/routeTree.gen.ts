@@ -17,6 +17,7 @@ import { Route as SocialAccountLinkingSocialIndexImport } from './routes/social-
 import { Route as SocialAccountLinkingAuthIndexImport } from './routes/social-account-linking/auth/index'
 import { Route as SignUpSocialIndexImport } from './routes/sign-up/social/index'
 import { Route as SignUpAuthIndexImport } from './routes/sign-up/auth/index'
+import { Route as FindAccountAuthIndexImport } from './routes/find-account/auth/index'
 import { Route as AuthGoogleCallbackIndexImport } from './routes/auth/google/callback/index'
 import { Route as AuthAppleCallbackIndexImport } from './routes/auth/apple/callback/index'
 
@@ -60,6 +61,12 @@ const SignUpAuthIndexRoute = SignUpAuthIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const FindAccountAuthIndexRoute = FindAccountAuthIndexImport.update({
+  id: '/find-account/auth/',
+  path: '/find-account/auth/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AuthGoogleCallbackIndexRoute = AuthGoogleCallbackIndexImport.update({
   id: '/auth/google/callback/',
   path: '/auth/google/callback/',
@@ -88,6 +95,13 @@ declare module '@tanstack/react-router' {
       path: '/login-error'
       fullPath: '/login-error'
       preLoaderRoute: typeof LoginErrorIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/find-account/auth/': {
+      id: '/find-account/auth/'
+      path: '/find-account/auth'
+      fullPath: '/find-account/auth'
+      preLoaderRoute: typeof FindAccountAuthIndexImport
       parentRoute: typeof rootRoute
     }
     '/sign-up/auth/': {
@@ -140,6 +154,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login-error': typeof LoginErrorIndexRoute
+  '/find-account/auth': typeof FindAccountAuthIndexRoute
   '/sign-up/auth': typeof SignUpAuthIndexRoute
   '/sign-up/social': typeof SignUpSocialIndexRoute
   '/social-account-linking/auth': typeof SocialAccountLinkingAuthIndexRoute
@@ -151,6 +166,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login-error': typeof LoginErrorIndexRoute
+  '/find-account/auth': typeof FindAccountAuthIndexRoute
   '/sign-up/auth': typeof SignUpAuthIndexRoute
   '/sign-up/social': typeof SignUpSocialIndexRoute
   '/social-account-linking/auth': typeof SocialAccountLinkingAuthIndexRoute
@@ -163,6 +179,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/login-error/': typeof LoginErrorIndexRoute
+  '/find-account/auth/': typeof FindAccountAuthIndexRoute
   '/sign-up/auth/': typeof SignUpAuthIndexRoute
   '/sign-up/social/': typeof SignUpSocialIndexRoute
   '/social-account-linking/auth/': typeof SocialAccountLinkingAuthIndexRoute
@@ -176,6 +193,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login-error'
+    | '/find-account/auth'
     | '/sign-up/auth'
     | '/sign-up/social'
     | '/social-account-linking/auth'
@@ -186,6 +204,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login-error'
+    | '/find-account/auth'
     | '/sign-up/auth'
     | '/sign-up/social'
     | '/social-account-linking/auth'
@@ -196,6 +215,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/login-error/'
+    | '/find-account/auth/'
     | '/sign-up/auth/'
     | '/sign-up/social/'
     | '/social-account-linking/auth/'
@@ -208,6 +228,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginErrorIndexRoute: typeof LoginErrorIndexRoute
+  FindAccountAuthIndexRoute: typeof FindAccountAuthIndexRoute
   SignUpAuthIndexRoute: typeof SignUpAuthIndexRoute
   SignUpSocialIndexRoute: typeof SignUpSocialIndexRoute
   SocialAccountLinkingAuthIndexRoute: typeof SocialAccountLinkingAuthIndexRoute
@@ -219,6 +240,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginErrorIndexRoute: LoginErrorIndexRoute,
+  FindAccountAuthIndexRoute: FindAccountAuthIndexRoute,
   SignUpAuthIndexRoute: SignUpAuthIndexRoute,
   SignUpSocialIndexRoute: SignUpSocialIndexRoute,
   SocialAccountLinkingAuthIndexRoute: SocialAccountLinkingAuthIndexRoute,
@@ -239,6 +261,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/login-error/",
+        "/find-account/auth/",
         "/sign-up/auth/",
         "/sign-up/social/",
         "/social-account-linking/auth/",
@@ -252,6 +275,9 @@ export const routeTree = rootRoute
     },
     "/login-error/": {
       "filePath": "login-error/index.tsx"
+    },
+    "/find-account/auth/": {
+      "filePath": "find-account/auth/index.tsx"
     },
     "/sign-up/auth/": {
       "filePath": "sign-up/auth/index.tsx"

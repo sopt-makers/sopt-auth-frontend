@@ -3,15 +3,17 @@ import { type MouseEvent } from 'react';
 import CannotLoginModalPortal from './CannotLoginModalPortal';
 import { IconAlertCircle } from '@sopt-makers/icons';
 import CannotLoginModalButton from './CannotLoginModalButton';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 interface CannotLoginModalProps {
   handleCloseModal: () => void;
 }
 
 function CannotLoginModal({ handleCloseModal }: CannotLoginModalProps) {
+  const navigate = useNavigate();
+
   const handleClickLoginAccountButton = () => {
-    /** navigate */
+    navigate({ to: '/find-account/auth' });
   };
 
   const handleClickKakaoChannelButton = () => {
