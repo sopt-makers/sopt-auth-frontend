@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { css } from "@/styled-system/css";
-import { IconChevronLeft } from "@sopt-makers/icons";
-import { useNavigate } from "@tanstack/react-router";
+import { css } from '@/styled-system/css';
+import { IconChevronLeft } from '@sopt-makers/icons';
+import { useRouter } from '@tanstack/react-router';
 
 function GoBackButton() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleClick = () => {
-    navigate({ to: ".." });
+    router.history.back();
   };
 
   return (
@@ -20,7 +20,7 @@ function GoBackButton() {
 export default GoBackButton;
 
 const arrowLeftStyles = css.raw({
-  width: "2.4rem",
-  height: "2.4rem",
-  color: "white",
+  width: '2.4rem',
+  height: '2.4rem',
+  color: 'white',
 });
