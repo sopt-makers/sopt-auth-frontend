@@ -1,6 +1,8 @@
+import { useNavigate } from '@tanstack/react-router';
 import { generateNonce } from '../utils/nonce';
 import { useLogin } from './useLogin';
 import { useSignUp } from './useSignUp';
+import { useUpdateSocialAccount } from './useUpdateSocialAccount';
 
 type AuthState =
   | {
@@ -23,6 +25,8 @@ type SignUpRequest = {
 export const useAuthWithApple = () => {
   const { handleLogin: login } = useLogin();
   const { handleSignUp: signUp } = useSignUp();
+  const { handleUpdateSocialAccount: update } = useUpdateSocialAccount();
+  const navigate = useNavigate();
 
   const signInWithApple = async (state: AuthState) => {
     const nonce = generateNonce(30);
@@ -56,6 +60,26 @@ export const useAuthWithApple = () => {
     }
   };
 
+  const handleUpdate = async () => {
+    const token = await signInWithApple({
+      type: 'update',
+    });
+
+    if (token) {
+      const phone = sessionStorage.getItem('phone');
+      if (!phone) {
+        alert('잘못된 접근입니다. 다시 시도해주세요');
+        navigate({ to: '/social-account-linking/auth', replace: true });
+        return;
+      }
+      await update({
+        token,
+        authPlatform: 'APPLE',
+        phone,
+      });
+    }
+  };
+
   const handleSignUp = async (req: Pick<SignUpRequest, 'name' | 'phone'>) => {
     const token = await signInWithApple({ type: 'signup' });
 
@@ -68,5 +92,5 @@ export const useAuthWithApple = () => {
     }
   };
 
-  return { handleSignIn, handleSignUp };
+  return { handleSignIn, handleSignUp, handleUpdate };
 };
