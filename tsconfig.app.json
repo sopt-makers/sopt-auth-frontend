@@ -28,5 +28,5 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["src", "styled-system"]
+  "include": ["src", "apple.d.ts", "styled-system"]
 }

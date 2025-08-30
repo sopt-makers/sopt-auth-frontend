@@ -1,64 +1,84 @@
-"use client";
-
-import { ReactNode, ChangeEvent, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { Button, TextField } from "@sopt-makers/ui";
-import { css, cx } from "@/styled-system/css";
-import { useTimer } from "@/src/hooks/useTimer";
-import { formatTime } from "@/src/utils/formatter";
-import { postAuthPhone } from "@/src/api/postAuthPhone";
-import { postVerifyPhone } from "@/src/api/postVerifyPhone";
+import { ReactNode, ChangeEvent, useState, useRef } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { Button, TextField, useToast } from '@sopt-makers/ui';
+import { css, cx } from '@/styled-system/css';
+import { useTimer } from '@/src/hooks/useTimer';
+import { formatTime } from '@/src/utils/formatter';
+import { postAuthPhone } from '@/src/api/postAuthPhone';
+import { postVerifyPhone } from '@/src/api/postVerifyPhone';
+import { isValidPhone } from '@/src/utils/validator';
+import { formatPhoneNumber, extractPhoneDigits } from '@/src/utils/formatter';
+import { getSocialAccountsPlatform } from '@/src/api/getSocialAccountsPlatfrom';
 
 interface AuthSectionProps {
   children?: ReactNode;
-  nextURL: "/sign-up/social" | "/social-account-linking/social";
+  nextURL: '/sign-up/social' | '/social-account-linking/social' | '/';
 }
 
+const authURLMap = {
+  '/sign-up/social': 'REGISTER',
+  '/social-account-linking/social': 'CHANGE_SOCIAL_PLATFORM',
+  '/': 'SEARCH_SOCIAL_PLATFORM',
+} as const;
+
 function AuthSection({ children, nextURL }: AuthSectionProps) {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [authNumber, setAuthNumber] = useState("");
-  const [authNumberErrorMessage, setAuthNumberErrorMessage] = useState("");
-  const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState("");
-  const [authButtonText, setAuthButtonText] = useState<
-    "전송하기" | "재전송하기"
-  >("전송하기");
-  const [isActive, setIsActive] = useState(false);
+  const [numberInput, setNumberInput] = useState({ phoneNumber: '', authNumber: '' });
+  const [errorMessage, setErrorMessage] = useState({ authNumber: '', phoneNumber: '' });
+  const [authButtonText, setAuthButtonText] = useState<'전송하기' | '재전송하기'>('전송하기');
+
+  /**
+   * NOTE: 디자인 시스템 TextField 컴포넌트에서 disabled 또는 readonly가 true인 경우 errorMessage가 보이지 않게 설정 되어있음
+   * 이를 해결하기 위해 css와 TextFieldRef blur 사용하여 disabled 처럼 구현
+   */
+  const textFieldRef = useRef<HTMLInputElement>(null);
+
+  const { open } = useToast();
 
   const navigate = useNavigate();
 
   const handleChangedPhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
+    setNumberInput((prev) => ({ ...prev, phoneNumber: formatPhoneNumber(e.target.value) }));
   };
 
   const handleChangeAuthNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    setAuthNumber(e.target.value);
+    setErrorMessage((prev) => ({ ...prev, authNumber: '' }));
+    setNumberInput((prev) => ({ ...prev, authNumber: e.target.value }));
   };
 
   const timerCallback = () => {
-    setAuthNumberErrorMessage(
-      "3분이 초과되었어요. 인증번호를 다시 요청해주세요."
-    );
-    setIsActive(false);
+    setNumberInput((prev) => ({ ...prev, authNumber: '' }));
+    setErrorMessage((prev) => ({ ...prev, authNumber: '3분이 초과되었어요. 인증번호를 다시 요청해주세요.' }));
+    const inputElement = textFieldRef.current?.querySelector('input');
+    if (inputElement) {
+      inputElement.blur();
+    }
   };
 
-  const { timeLeft, resetTime } = useTimer(isActive, timerCallback, 10);
+  const { timeLeft, reset, start, isTimerActive } = useTimer(timerCallback);
 
   const handleSendAuthNumber = async () => {
-    if (phoneNumber === "") {
-      setPhoneNumberErrorMessage("전화번호를 확인해주세요.");
+    if (numberInput.phoneNumber === '') {
+      setErrorMessage((prev) => ({ ...prev, phoneNumber: '전화번호를 확인해주세요.' }));
     } else {
       try {
-        await postAuthPhone(phoneNumber);
+        await postAuthPhone({
+          phone: extractPhoneDigits(numberInput.phoneNumber),
+          type: authURLMap[nextURL],
+        });
 
-        setAuthButtonText("재전송하기");
-        setAuthNumber("");
-        setAuthNumberErrorMessage("");
-        setPhoneNumberErrorMessage("");
-        resetTime();
-        setIsActive(true);
+        open({
+          icon: 'success',
+          content: '인증번호가 전송되었어요.',
+        });
+
+        setAuthButtonText('재전송하기');
+        setNumberInput((prev) => ({ ...prev, authNumber: '' }));
+        setErrorMessage({ phoneNumber: '', authNumber: '' });
+        reset();
+        start();
       } catch (error) {
         if (error instanceof Error) {
-          setPhoneNumberErrorMessage(error.message);
+          setErrorMessage((prev) => ({ ...prev, phoneNumber: error.message }));
         }
       }
     }
@@ -66,13 +86,26 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
 
   const handleAuthComplete = async () => {
     try {
-      await postVerifyPhone(phoneNumber, authNumber);
+      const response = await postVerifyPhone({
+        phone: extractPhoneDigits(numberInput.phoneNumber),
+        code: numberInput.authNumber,
+        type: authURLMap[nextURL],
+      });
+      const { name, phone } = response.data;
 
-      setAuthNumberErrorMessage("");
+      sessionStorage.setItem('name', name);
+      sessionStorage.setItem('phone', phone);
+
+      if (nextURL === '/') {
+        const socialAccountsPlatformResponse = await getSocialAccountsPlatform({ name, phone });
+        localStorage.setItem('sopt-lastRegister', socialAccountsPlatformResponse.data.platform);
+      }
+
+      setErrorMessage((prev) => ({ ...prev, authNumber: '' }));
       navigate({ to: nextURL });
     } catch (error) {
       if (error instanceof Error) {
-        setAuthNumberErrorMessage(error.message);
+        setErrorMessage((prev) => ({ ...prev, authNumber: error.message }));
       }
     }
   };
@@ -83,50 +116,43 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
         <h3 className={css({ ...phoneTitleStyles })}>전화번호</h3>
         <div className={css({ ...phoneWrapperStyles })}>
           <TextField
-            value={phoneNumber}
+            value={numberInput.phoneNumber}
             onChange={handleChangedPhoneNumber}
-            placeholder="010XXXXXXXX"
-            isError={phoneNumberErrorMessage.length > 0}
-            errorMessage={phoneNumberErrorMessage}
+            maxLength={13}
+            placeholder="010-XXXX-XXXX"
+            isError={errorMessage.phoneNumber.length > 0}
+            errorMessage={errorMessage.phoneNumber}
             className={css({ ...phoneInputStyles })}
           />
           <Button
+            disabled={!isValidPhone(numberInput.phoneNumber) || isTimerActive}
             className={css({ ...sendAuthNumberButtonStyles })}
-            onClick={handleSendAuthNumber}
-          >
+            onClick={handleSendAuthNumber}>
             {authButtonText}
           </Button>
         </div>
         <div className={css({ ...authNumberWrapperStyles })}>
           <TextField
-            value={authNumber}
+            ref={textFieldRef}
+            value={numberInput.authNumber}
             onChange={handleChangeAuthNumber}
+            maxLength={6}
             placeholder="인증번호를 입력해주세요."
-            isError={authNumberErrorMessage.length > 0}
-            errorMessage={authNumberErrorMessage}
-            className={css({ ...authNumberInputStyles })}
+            isError={errorMessage.authNumber.length > 0}
+            errorMessage={errorMessage.authNumber}
+            className={css({ ...authNumberInputStyles, ...(!isTimerActive ? disableTextfieldStyles : {}) })}
           />
-          <span
-            className={cx(
-              timeStyles,
-              authNumberErrorMessage.length > 0 && errorTextStyles
-            )}
-          >
-            {timeLeft === 180 ? "3:00" : formatTime(timeLeft)}
+          <span className={cx(timeStyles, errorMessage.authNumber.length > 0 && errorTextStyles)}>
+            {formatTime(timeLeft)}
           </span>
         </div>
       </section>
       {children}
       <Button
         size="lg"
-        disabled={
-          !isActive ||
-          authNumber.length === 0 ||
-          authNumberErrorMessage.length > 0
-        }
+        disabled={!isTimerActive || numberInput.authNumber.length === 0 || errorMessage.authNumber.length > 0}
         onClick={handleAuthComplete}
-        className={css({ ...completeButtonStyles })}
-      >
+        className={css({ ...completeButtonStyles })}>
         SOPT 회원인증 완료
       </Button>
     </>
@@ -136,83 +162,94 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
 export default AuthSection;
 
 const authSectionStyles = css.raw({
-  display: "flex",
-  flexDirection: "column",
-  gap: "1.8rem",
-  marginTop: "4.8rem",
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.8rem',
+  marginTop: '4.8rem',
 
-  "@media (max-width: 480px)": {
-    gap: "1.4rem",
+  '@media (max-width: 480px)': {
+    gap: '1.4rem',
   },
 });
 
 const phoneTitleStyles = css.raw({
-  textStyle: "label-2-16-sb",
-  color: "gray.400",
+  textStyle: 'label-2-16-sb',
+  color: 'gray.400',
 
-  "@media (max-width: 480px)": {
-    textStyle: "label-3-14-sb",
+  '@media (max-width: 480px)': {
+    textStyle: 'label-3-14-sb',
   },
 });
 
 const phoneWrapperStyles = css.raw({
-  display: "flex",
-  alignItems: "baseline",
-  columnGap: "1.2rem",
+  display: 'flex',
+  alignItems: 'baseline',
+  columnGap: '1.2rem',
 
-  "@media (max-width: 480px)": {
-    gap: "0.7rem",
+  '@media (max-width: 480px)': {
+    gap: '0.7rem',
   },
 });
 
 const phoneInputStyles = css.raw({
-  flex: 1,
+  width: '70%',
 });
 
 const authNumberInputStyles = css.raw({
-  width: "42rem",
-  height: "48px",
+  width: '100%',
+  height: '48px',
 
-  "@media (max-width: 480px)": {
-    width: "100%",
+  '@media (max-width: 480px)': {
+    width: '100%',
   },
 });
 
 const timeStyles = css({
-  position: "absolute",
-  right: "1.6rem",
-  textStyle: "body-2-16-m",
-  color: "white",
+  position: 'absolute',
+  right: '1.6rem',
+  textStyle: 'body-2-16-m',
+  color: 'white',
 
-  "@media (max-width: 480px)": {
-    textStyle: "body-3-14-m",
+  '@media (max-width: 480px)': {
+    textStyle: 'body-3-14-m',
   },
 });
 
 const errorTextStyles = css({
-  color: "red.400",
+  color: 'red.400',
 });
 
 const authNumberWrapperStyles = css.raw({
-  position: "relative",
-  display: "flex",
-  alignItems: "center",
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
 });
 
 const completeButtonStyles = css.raw({
-  marginTop: "4.8rem",
-  width: "100%",
+  marginTop: '4.8rem',
+  width: '100%',
 
-  "@media (max-width: 480px)": {
-    marginTop: "auto",
-    marginBottom: "3.4rem",
+  '@media (max-width: 480px)': {
+    marginTop: 'auto',
+    marginBottom: '3.4rem',
   },
 });
 
 const sendAuthNumberButtonStyles = css.raw({
-  width: "11.6rem",
+  width: '30%',
 
-  "@media (max-width: 480px)": {
-    width: "11rem",
+  '@media (max-width: 480px)': {
+    width: '11rem',
+  },
+});
+
+const disableTextfieldStyles = css.raw({
+  cursor: 'not-allowed',
+  pointerEvents: 'none',
+  userSelect: 'none',
+  '& input': {
+    opacity: 0.5,
+    pointerEvents: 'none',
+    cursor: 'not-allowed',
   },
 });
