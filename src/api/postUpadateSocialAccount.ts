@@ -20,7 +20,6 @@ export const patchUpdateSocialAccount = async ({ phone, token, authPlatform }: P
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ phone, authPlatform, token }),
-    credentials: 'include',
   });
 
   const responseData = (await response.json()) as PatchUpdateSocialAccountResponse;
