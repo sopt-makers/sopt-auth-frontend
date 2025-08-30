@@ -127,7 +127,6 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
             onChange={handleChangeAuthNumber}
             maxLength={6}
             placeholder="인증번호를 입력해주세요."
-            disabled={!isTimerActive}
             isError={errorMessage.authNumber.length > 0}
             errorMessage={errorMessage.authNumber}
             className={css({ ...authNumberInputStyles })}
