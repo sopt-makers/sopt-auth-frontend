@@ -1,12 +1,12 @@
 import { useNavigate } from '@tanstack/react-router';
-import { postUpdateSocialAccount, type PostUpdateSocialAccountRequest } from '../api/postUpadateSocialAccount';
+import { patchUpdateSocialAccount, type PatchUpdateSocialAccountRequest } from '../api/postUpadateSocialAccount';
 
 export const useUpdateSocialAccount = () => {
   const navigate = useNavigate();
 
-  const handleUpdateSocialAccount = async ({ phone, token, authPlatform }: PostUpdateSocialAccountRequest) => {
+  const handleUpdateSocialAccount = async ({ phone, token, authPlatform }: PatchUpdateSocialAccountRequest) => {
     try {
-      const response = await postUpdateSocialAccount({ phone, token, authPlatform });
+      const response = await patchUpdateSocialAccount({ phone, token, authPlatform });
       sessionStorage.removeItem('name');
       sessionStorage.removeItem('phone');
       alert(response.message);

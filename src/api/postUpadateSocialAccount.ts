@@ -1,21 +1,21 @@
 import { client } from './client';
 import { API_ENDPOINT } from './constants/apiUrl';
 
-export interface PostUpdateSocialAccountRequest {
+export interface PatchUpdateSocialAccountRequest {
   phone: string;
   token: string;
   authPlatform: 'GOOGLE' | 'APPLE';
 }
 
-export interface PostUpdateSocialAccountResponse {
+export interface PatchUpdateSocialAccountResponse {
   success: boolean;
   message: string;
   data: null;
 }
 
-export const postUpdateSocialAccount = async ({ phone, token, authPlatform }: PostUpdateSocialAccountRequest) => {
+export const patchUpdateSocialAccount = async ({ phone, token, authPlatform }: PatchUpdateSocialAccountRequest) => {
   const response = await client(API_ENDPOINT.UPDATE_SOCIAL_ACCOUNT, {
-    method: 'POST',
+    method: 'patch',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -23,7 +23,7 @@ export const postUpdateSocialAccount = async ({ phone, token, authPlatform }: Po
     credentials: 'include',
   });
 
-  const responseData = (await response.json()) as PostUpdateSocialAccountResponse;
+  const responseData = (await response.json()) as PatchUpdateSocialAccountResponse;
 
   if (!response.ok) {
     throw new Error(responseData.message);
