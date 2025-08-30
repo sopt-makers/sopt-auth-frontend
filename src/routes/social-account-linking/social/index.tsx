@@ -21,7 +21,7 @@ export const Route = createFileRoute('/social-account-linking/social/')({
 
 function Index() {
   const name = sessionStorage.getItem('name');
-  const { handleSignIn } = useAuthWithApple();
+  const { handleUpdate } = useAuthWithApple();
 
   const handleGoogleLogin = () => {
     location.href = getGoogleAuthUrl({ state: 'update' });
@@ -47,7 +47,7 @@ function Index() {
           buttonIcon={<img src={googleLogo} alt="구글 로고" />}
         />
         <LoginButton
-          onClick={handleSignIn}
+          onClick={handleUpdate}
           buttonText="Apple로 로그인"
           buttonIcon={<img src={appleLogo} alt="애플 로고" />}
         />
