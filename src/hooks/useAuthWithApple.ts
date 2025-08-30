@@ -31,7 +31,7 @@ export const useAuthWithApple = () => {
     try {
       const response = await window.AppleID.auth.signIn({
         clientId: 'com.auth-frontend.sopt',
-        redirectURI: 'https://sopt-auth-frontend.pages.dev/accounts/auth/apple/callback',
+        redirectURI: import.meta.env.VITE_APPLE_REDIRECT_URI,
         state: state.type,
       });
       if (!response.authorization || !response.authorization.id_token) {
