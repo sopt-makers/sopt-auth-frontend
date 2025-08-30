@@ -29,4 +29,8 @@ const rootLayoutStyle = css.raw({
   alignItems: 'center',
   justifyContent: 'center',
   height: '100vh',
+
+  '@media (max-width: 480px)': {
+    height: '100dvh',
+  },
 });

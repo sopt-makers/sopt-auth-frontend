@@ -67,6 +67,7 @@ const cannotLoginModalWrapperStyles = css.raw({
   backgroundColor: 'grayAlpha.800',
 
   '@media (max-width: 480px)': {
+    height: '100dvh',
     alignItems: 'flex-end',
   },
 });
