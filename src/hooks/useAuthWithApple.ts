@@ -30,7 +30,7 @@ export const useAuthWithApple = () => {
 
     try {
       const response = await window.AppleID.auth.signIn({
-        clientId: 'com.auth-frontend.sopt',
+        clientId: import.meta.env.VITE_APPLE_APP_ID,
         redirectURI: import.meta.env.VITE_APPLE_REDIRECT_URI,
         state: state.type,
       });
