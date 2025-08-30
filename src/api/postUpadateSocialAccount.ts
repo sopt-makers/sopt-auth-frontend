@@ -15,7 +15,7 @@ export interface PatchUpdateSocialAccountResponse {
 
 export const patchUpdateSocialAccount = async ({ phone, token, authPlatform }: PatchUpdateSocialAccountRequest) => {
   const response = await client(API_ENDPOINT.UPDATE_SOCIAL_ACCOUNT, {
-    method: 'patch',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
