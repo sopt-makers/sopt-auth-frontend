@@ -1,4 +1,4 @@
-import { ReactNode, ChangeEvent, useState } from 'react';
+import { ReactNode, ChangeEvent, useState, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { Button, TextField, useToast } from '@sopt-makers/ui';
 import { css, cx } from '@/styled-system/css';
@@ -26,6 +26,12 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   const [errorMessage, setErrorMessage] = useState({ authNumber: '', phoneNumber: '' });
   const [authButtonText, setAuthButtonText] = useState<'전송하기' | '재전송하기'>('전송하기');
 
+  /**
+   * NOTE: 디자인 시스템 TextField 컴포넌트에서 disabled 또는 readonly가 true인 경우 errorMessage가 보이지 않게 설정 되어있음
+   * 이를 해결하기 위해 css와 TextFieldRef blur 사용하여 disabled 처럼 구현
+   */
+  const textFieldRef = useRef<HTMLInputElement>(null);
+
   const { open } = useToast();
 
   const navigate = useNavigate();
@@ -42,6 +48,10 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
   const timerCallback = () => {
     setNumberInput((prev) => ({ ...prev, authNumber: '' }));
     setErrorMessage((prev) => ({ ...prev, authNumber: '3분이 초과되었어요. 인증번호를 다시 요청해주세요.' }));
+    const inputElement = textFieldRef.current?.querySelector('input');
+    if (inputElement) {
+      inputElement.blur();
+    }
   };
 
   const { timeLeft, reset, start, isTimerActive } = useTimer(timerCallback);
@@ -123,13 +133,14 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
         </div>
         <div className={css({ ...authNumberWrapperStyles })}>
           <TextField
+            ref={textFieldRef}
             value={numberInput.authNumber}
             onChange={handleChangeAuthNumber}
             maxLength={6}
             placeholder="인증번호를 입력해주세요."
             isError={errorMessage.authNumber.length > 0}
             errorMessage={errorMessage.authNumber}
-            className={css({ ...authNumberInputStyles })}
+            className={css({ ...authNumberInputStyles, ...(!isTimerActive ? disableTextfieldStyles : {}) })}
           />
           <span className={cx(timeStyles, errorMessage.authNumber.length > 0 && errorTextStyles)}>
             {formatTime(timeLeft)}
@@ -229,5 +240,16 @@ const sendAuthNumberButtonStyles = css.raw({
 
   '@media (max-width: 480px)': {
     width: '11rem',
+  },
+});
+
+const disableTextfieldStyles = css.raw({
+  cursor: 'not-allowed',
+  pointerEvents: 'none',
+  userSelect: 'none',
+  '& input': {
+    opacity: 0.5,
+    pointerEvents: 'none',
+    cursor: 'not-allowed',
   },
 });
