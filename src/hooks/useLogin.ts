@@ -17,7 +17,7 @@ export const useLogin = () => {
       // prompt('서버테스트용 액세스 토큰 추출 (Ctrl+C로 복사하세요):', response.data.accessToken);
 
       if (response.data?.isFirstLogin === true) {
-        window.location.href = `${VITE_SUCCESS_CALLBACK}/members/edit`;
+        window.location.href = `${VITE_SUCCESS_CALLBACK}/members/upload`;
         return;
       }
 
