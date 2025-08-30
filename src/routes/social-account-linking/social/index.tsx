@@ -6,6 +6,7 @@ import { getGoogleAuthUrl } from '@/src/utils/google';
 import { isAuthenticated } from '@/src/utils/auth';
 import appleLogo from '@/src/assets/apple.svg';
 import googleLogo from '@/src/assets/google.svg';
+import { useAuthWithApple } from '@/src/hooks/useAuthWithApple';
 
 export const Route = createFileRoute('/social-account-linking/social/')({
   component: Index,
@@ -20,6 +21,7 @@ export const Route = createFileRoute('/social-account-linking/social/')({
 
 function Index() {
   const name = sessionStorage.getItem('name');
+  const { handleSignIn } = useAuthWithApple();
 
   const handleGoogleLogin = () => {
     location.href = getGoogleAuthUrl({ state: 'update' });
@@ -44,7 +46,11 @@ function Index() {
           buttonText="Google로 로그인"
           buttonIcon={<img src={googleLogo} alt="구글 로고" />}
         />
-        <LoginButton buttonText="Apple로 로그인" buttonIcon={<img src={appleLogo} alt="애플 로고" />} />
+        <LoginButton
+          onClick={handleSignIn}
+          buttonText="Apple로 로그인"
+          buttonIcon={<img src={appleLogo} alt="애플 로고" />}
+        />
       </section>
     </main>
   );
