@@ -9,11 +9,21 @@ export const Route = createFileRoute('/auth/google/callback/')({
   component: Index,
 });
 
+type AlertWithNavigate = {
+  message: string;
+  to: string;
+};
+
 function Index() {
   const navigate = useNavigate();
   const { handleLogin } = useLogin();
   const { handleSignUp } = useSignUp();
   const { handleUpdateSocialAccount } = useUpdateSocialAccount();
+
+  const alertWithNavigate = ({ message, to }: AlertWithNavigate) => {
+    alert(message);
+    navigate({ to, replace: true });
+  };
 
   useEffect(() => {
     const hash = window.location.hash.substring(1);
@@ -23,14 +33,12 @@ function Index() {
 
     if (!token) {
       console.log('token 없음');
-      alert('잘못된 접근입니다. 다시 시도해주세요');
-      navigate({ to: '/' });
+      alertWithNavigate({ message: '잘못된 접근입니다. 다시 시도해주세요', to: '/' });
     } else {
       const decoded = jwtDecode(token);
 
       if (!validateNonce(decoded)) {
-        alert('토큰이 유효하지 않습니다. 다시 로그인 해주세요');
-        navigate({ to: '/', replace: true });
+        alertWithNavigate({ message: '토큰이 유효하지 않습니다. 다시 로그인 해주세요', to: '/' });
         return;
       }
 
@@ -42,8 +50,10 @@ function Index() {
           {
             const phone = sessionStorage.getItem('phone');
             if (!phone) {
-              alert('잘못된 접근입니다. 다시 시도해주세요');
-              navigate({ to: '/social-account-linking/auth', replace: true });
+              alertWithNavigate({
+                message: '잘못된 접근입니다. 다시 시도해주세요',
+                to: '/social-account-linking/auth',
+              });
             } else {
               handleUpdateSocialAccount({ token, authPlatform: 'GOOGLE', phone });
             }
@@ -54,16 +64,14 @@ function Index() {
             const name = sessionStorage.getItem('name');
             const phone = sessionStorage.getItem('phone');
             if (!name || !phone) {
-              alert('잘못된 접근입니다. 다시 시도해주세요');
-              navigate({ to: '/sign-up/auth', replace: true });
+              alertWithNavigate({ message: '잘못된 접근입니다. 다시 시도해주세요', to: '/sign-up/auth' });
             } else {
               handleSignUp({ token, authPlatform: 'GOOGLE', name, phone });
             }
           }
           break;
         default:
-          alert('잘못된 접근입니다. 다시 시도해주세요');
-          navigate({ to: '/', replace: true });
+          alertWithNavigate({ message: '잘못된 접근입니다. 다시 시도해주세요', to: '/' });
       }
     }
   }, []);
