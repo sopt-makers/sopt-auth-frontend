@@ -31,6 +31,7 @@ function Index() {
       if (!validateNonce(decoded)) {
         alert('토큰이 유효하지 않습니다. 다시 로그인 해주세요');
         navigate({ to: '/', replace: true });
+        return;
       }
 
       switch (state) {
