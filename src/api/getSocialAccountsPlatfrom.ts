@@ -1,33 +1,27 @@
 import { client } from './client';
 import { API_ENDPOINT } from './constants/apiUrl';
 
-interface GetSocialAccountsPlatformRequest {
-  name: string;
+interface PostSocialAccountsPlatformRequest {
   phone: string;
 }
 
-interface GetSocialAccountsPlatformResponse {
+interface PostSocialAccountsPlatformResponse {
   success: boolean;
   message: string;
-  data: {
-    platform: string;
-  };
+  data: string;
 }
 
-export const getSocialAccountsPlatform = async ({ name, phone }: GetSocialAccountsPlatformRequest) => {
-  const params = new URLSearchParams();
-  params.append('name', name);
-  params.append('phone', phone);
-
-  const response = await client(`${API_ENDPOINT.GET_SOCIAL_ACCOUNTS_PLATFORM}?${params.toString()}`, {
-    method: 'GET',
+export const postSocialAccountsPlatform = async ({ phone }: PostSocialAccountsPlatformRequest) => {
+  const response = await client(API_ENDPOINT.POST_SOCIAL_ACCOUNTS_PLATFORM, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({ phone }),
     credentials: 'include',
   });
 
-  const responseData = (await response.json()) as GetSocialAccountsPlatformResponse;
+  const responseData = (await response.json()) as PostSocialAccountsPlatformResponse;
 
   if (!response.ok) {
     throw new Error(responseData.message);

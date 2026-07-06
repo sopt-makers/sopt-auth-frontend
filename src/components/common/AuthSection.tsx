@@ -8,7 +8,7 @@ import { postAuthPhone } from '@/src/api/postAuthPhone';
 import { postVerifyPhone } from '@/src/api/postVerifyPhone';
 import { isValidPhone } from '@/src/utils/validator';
 import { formatPhoneNumber, extractPhoneDigits } from '@/src/utils/formatter';
-import { getSocialAccountsPlatform } from '@/src/api/getSocialAccountsPlatfrom';
+import { postSocialAccountsPlatform } from '@/src/api/getSocialAccountsPlatfrom';
 
 interface AuthSectionProps {
   children?: ReactNode;
@@ -97,8 +97,8 @@ function AuthSection({ children, nextURL }: AuthSectionProps) {
       sessionStorage.setItem('phone', phone);
 
       if (nextURL === '/') {
-        const socialAccountsPlatformResponse = await getSocialAccountsPlatform({ name, phone });
-        localStorage.setItem('sopt-lastRegister', socialAccountsPlatformResponse.data.platform);
+        const socialAccountsPlatformResponse = await postSocialAccountsPlatform({ phone });
+        localStorage.setItem('sopt-lastRegister', socialAccountsPlatformResponse.data);
       }
 
       setErrorMessage((prev) => ({ ...prev, authNumber: '' }));
